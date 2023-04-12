@@ -11,5 +11,6 @@ public interface ICrudCash {
     Cash findOne(Long id);
     void save(Cash cash);
     void delete(Long id);
+    List<Cash> findCashByIdUser(Long id);
 
 }
