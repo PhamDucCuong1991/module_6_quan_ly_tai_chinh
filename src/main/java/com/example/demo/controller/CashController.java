@@ -6,7 +6,10 @@ import com.example.demo.service.account_service.impl.CashService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
+import org.springframework.security.core.parameters.P;
 import org.springframework.web.bind.annotation.*;
+
+import java.time.LocalDateTime;
 import java.util.List;
 @RestController
 @CrossOrigin("*")
@@ -20,6 +23,14 @@ public class CashController {
     public ResponseEntity<List<Cash>> findCashByID(@PathVariable Long id){
        return new ResponseEntity<>(cashService.findCashByIdUser(id), HttpStatus.OK);
     }
+    @GetMapping("/{userId}/{start}/{end}")
+    private ResponseEntity<List<Cash>> findCashByDate(@PathVariable Long userId,
+    @PathVariable String start, @PathVariable String end){
+    LocalDateTime startDate=LocalDateTime.parse(start);
+    LocalDateTime endDate=LocalDateTime.parse(end);
+        return new ResponseEntity<>(cashService.findCashByDate(userId,startDate,endDate),HttpStatus.OK);
+    }
+
     @GetMapping("/detail/{id}")
     private ResponseEntity<Cash> findOne(@PathVariable Long id){
         return new ResponseEntity<>(cashService.findOne(id),HttpStatus.OK);
