@@ -1,6 +1,7 @@
 package com.example.demo.Model;
 
-import com.example.demo.model.account.Account;
+import com.example.demo.account.Account;
+
 import lombok.AllArgsConstructor;
 import lombok.Getter;
 import lombok.NoArgsConstructor;

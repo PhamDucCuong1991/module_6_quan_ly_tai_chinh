@@ -1,5 +1,6 @@
 package com.example.demo.Model;
 
+import com.example.demo.account.Account;
 import lombok.AllArgsConstructor;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
@@ -8,6 +9,7 @@ import org.apache.catalina.User;
 
 import javax.persistence.*;
 import java.time.LocalDateTime;
+import java.util.List;
 
 @Entity
 @NoArgsConstructor
@@ -24,7 +26,5 @@ public class Cash {
     private String type;
     @ManyToOne
     private Category category;
-    @OneToOne
-    private User user;
 
 }

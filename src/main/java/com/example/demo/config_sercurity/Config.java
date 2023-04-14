@@ -35,8 +35,8 @@ public class Config extends WebSecurityConfigurerAdapter {
     protected void configure(HttpSecurity http) throws Exception {
         http.csrf().ignoringAntMatchers("/**");
         http.authorizeRequests()
-                .antMatchers( "/user/login", "/home").permitAll()
-                .antMatchers("/**").hasAnyRole("USER")
+                .antMatchers( "/**").permitAll()
+//                .antMatchers("/**").hasAnyRole("USER")
                 .anyRequest().authenticated()
                 .and().csrf().disable();
         http.addFilterBefore(jwtAuthenticationFilter, UsernamePasswordAuthenticationFilter.class)

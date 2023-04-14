@@ -2,9 +2,9 @@ package com.example.demo.controller;
 
 import com.example.demo.account.Account;
 import com.example.demo.account.AccountToken;
-import com.example.demo.account.Role;
 import com.example.demo.service.account_service.AccountService;
 import com.example.demo.service.account_service.JwtService;
+import com.example.demo.service.email_service.EmailService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.authentication.AuthenticationManager;
 import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
@@ -12,8 +12,6 @@ import org.springframework.security.core.Authentication;
 import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.web.bind.annotation.*;
 
-import java.util.ArrayList;
-import java.util.List;
 
 @RestController
 @CrossOrigin("*")
@@ -27,6 +25,9 @@ public class AccountController {
 
     @Autowired
     private AuthenticationManager authenticationManager;
+
+    @Autowired
+    private EmailService emailService;
 
     @PostMapping("/login")
     public AccountToken login(@RequestBody Account account) {
@@ -45,16 +46,34 @@ public class AccountController {
     }
 
     @PostMapping("/register")
-    public void register(@RequestBody Account account) {
-        Role role = new Role();
-        role.setId(1L);
-        account.setRole(role);
+    public boolean register(@RequestBody Account account) {
+        if(accountService.checkRegister(account.getUsername())) {
+
+            account.setStatus(false);
+            accountService.save(account);
+            String link = "http://localhost:8080/user/confirm";
+            String to = account.getUsername();
+            String subject = "Register success!";
+            String text= "Ma xan nhan cua ban la: "+ link;
+            emailService.sendMail(to,subject,text);
+
+            return true;
+
+        }
+
+        return false;
+    }
+
+    @GetMapping("/confirm")
+    public void confirm(@RequestBody Account account){
         account.setStatus(true);
         accountService.save(account);
+
     }
 
     @GetMapping("/{id}")
     public Account findOne(@PathVariable Long id){
         return accountService.findAccountById(id);
     }
+
 }

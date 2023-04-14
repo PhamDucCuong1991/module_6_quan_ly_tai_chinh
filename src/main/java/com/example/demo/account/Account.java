@@ -1,5 +1,6 @@
 package com.example.demo.account;
 
+import com.example.demo.Model.Cash;
 import lombok.*;
 import org.hibernate.validator.constraints.UniqueElements;
 import org.springframework.security.core.GrantedAuthority;
@@ -22,7 +23,7 @@ public class Account implements UserDetails {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
     @NotNull
-    @UniqueElements
+   @Column(columnDefinition = "varchar(255) unique")
     private String username;
     @NotNull
     private String password;
@@ -31,6 +32,9 @@ public class Account implements UserDetails {
     private String address;
     private String phoneNumber;
     private boolean status;
+
+    @ManyToOne
+    private Cash cash;
 
     @ManyToOne
     private Role role;
