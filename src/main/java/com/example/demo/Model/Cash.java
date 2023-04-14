@@ -1,16 +1,15 @@
 package com.example.demo.Model;
 
 import com.example.demo.account.Account;
-import lombok.AllArgsConstructor;
-import lombok.Getter;
-import lombok.NoArgsConstructor;
-import lombok.Setter;
+import lombok.*;
 import org.apache.catalina.User;
+import org.springframework.beans.factory.annotation.Value;
 
 import javax.persistence.*;
+import javax.validation.constraints.NotNull;
+import javax.validation.constraints.Positive;
 import java.time.LocalDateTime;
-import java.util.List;
-
+@Data
 @Entity
 @NoArgsConstructor
 @AllArgsConstructor
@@ -21,10 +20,15 @@ public class Cash {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
     private LocalDateTime date;
+    @NotNull
     private String name;
+    @Positive
     private Double money;
+    @NotNull
     private String type;
     @ManyToOne
     private Category category;
+    @ManyToOne
+    private Account account;
 
 }

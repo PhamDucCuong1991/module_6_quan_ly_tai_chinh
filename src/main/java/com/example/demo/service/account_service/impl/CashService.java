@@ -8,6 +8,7 @@ import com.example.demo.service.account_service.ICrudCash;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import java.time.LocalDateTime;
 import java.util.List;
 
 @Service
@@ -34,5 +35,15 @@ public class CashService implements ICrudCash {
     @Override
     public void delete(Long id) {
     cashRepository.deleteById(id);
+    }
+
+    @Override
+    public List<Cash> findCashByIdUser(Long id) {
+        return cashRepository.findCashByUserId(id);
+    }
+
+    @Override
+    public List<Cash> findCashByDate(Long userId, LocalDateTime startDate, LocalDateTime endDate) {
+        return cashRepository.findCashByDateStart(userId,startDate,endDate);
     }
 }

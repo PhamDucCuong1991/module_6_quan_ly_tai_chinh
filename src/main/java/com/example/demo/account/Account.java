@@ -1,17 +1,15 @@
 package com.example.demo.account;
-
 import com.example.demo.Model.Cash;
 import lombok.*;
 import org.hibernate.validator.constraints.UniqueElements;
 import org.springframework.security.core.GrantedAuthority;
 import org.springframework.security.core.userdetails.UserDetails;
-
 import javax.persistence.*;
 import javax.validation.constraints.NotNull;
 import java.util.Collection;
 import java.util.HashSet;
+import java.util.List;
 import java.util.Set;
-
 @Data
 @Entity
 @NoArgsConstructor
@@ -23,7 +21,6 @@ public class Account implements UserDetails {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
     @NotNull
-   @Column(columnDefinition = "varchar(255) unique")
     private String username;
     @NotNull
     private String password;
@@ -32,33 +29,25 @@ public class Account implements UserDetails {
     private String address;
     private String phoneNumber;
     private boolean status;
-
-    @ManyToOne
-    private Cash cash;
-
     @ManyToOne
     private Role role;
-
     public Account(Long id, String username, String password) {
         this.id = id;
         this.username = username;
         this.password = password;
     }
-
     public Account(Long id, String username, String password, String avatar) {
         this.id = id;
         this.username = username;
         this.password = password;
         this.avatar = avatar;
     }
-
     @Override
     public Collection<? extends GrantedAuthority> getAuthorities() {
         Set<Role> roleSet = new HashSet<>();
         roleSet.add(role);
         return roleSet;
     }
-
     @Override
     public boolean isAccountNonExpired() {
         return false;

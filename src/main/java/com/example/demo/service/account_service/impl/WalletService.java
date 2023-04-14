@@ -15,8 +15,8 @@ public class WalletService implements ICrudWallet {
     @Autowired
     public WalletRepository walletRepository;
     @Override
-    public List<Wallet> findAll() {
-        return walletRepository.findAll();
+    public List<Wallet> findAll(Long userID) {
+        return walletRepository.selectCash(userID);
     }
 
     @Override
@@ -32,5 +32,10 @@ public class WalletService implements ICrudWallet {
     @Override
     public void delete(Long id) {
     walletRepository.deleteById(id);
+    }
+
+    @Override
+    public Double sumMoney(Long id) {
+        return walletRepository.sumMoneyByUserId(id);
     }
 }

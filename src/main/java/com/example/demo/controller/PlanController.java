@@ -1,15 +1,11 @@
 package com.example.demo.controller;
-
-
 import com.example.demo.Model.Plan;
 import com.example.demo.service.account_service.impl.PlanService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
-
 import java.util.List;
-
 @RestController
 @CrossOrigin("*")
 @RequestMapping("/plans")
