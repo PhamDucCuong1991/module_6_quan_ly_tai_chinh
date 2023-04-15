@@ -3,6 +3,7 @@ import com.example.demo.service.account_service.AccountService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
+import org.springframework.http.HttpMethod;
 import org.springframework.security.authentication.AuthenticationManager;
 import org.springframework.security.config.BeanIds;
 import org.springframework.security.config.annotation.authentication.builders.AuthenticationManagerBuilder;
@@ -29,7 +30,12 @@ public class Config extends WebSecurityConfigurerAdapter {
     protected void configure(HttpSecurity http) throws Exception {
         http.csrf().ignoringAntMatchers("/**");
         http.authorizeRequests()
-                .antMatchers( "/**").permitAll()
+
+                .antMatchers(HttpMethod.POST).permitAll()
+                .antMatchers(HttpMethod.PUT).hasRole("USER")
+                .antMatchers(HttpMethod.DELETE).hasRole("USER")
+                .antMatchers(HttpMethod.GET).permitAll()
+                .antMatchers( "/user/**").permitAll()
 //                .antMatchers( "/user/login", "/home").permitAll()
 //                .antMatchers("/**").hasAnyRole("USER")
                 .anyRequest().authenticated()
