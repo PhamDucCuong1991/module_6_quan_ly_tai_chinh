@@ -11,7 +11,7 @@ import java.util.Date;
 @Service
 public class JwtService {
     // key để mã hóa token.
-    private static final String SECRET_KEY = "9999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999";
+    private static final String SECRET_KEY = System.getenv("JWT_KEY");
     // thời gian để token sống.
     private static final long EXPIRE_TIME = 60*60*24;
 
