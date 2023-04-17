@@ -2,7 +2,6 @@ package com.example.demo.service.account_service;
 import com.example.demo.Model.Wallet;
 import java.util.List;
 import java.util.Optional;
-
 public interface ICrudWallet {
     List<Wallet> findAll(Optional<Long> userId);
     Wallet findOne(Long id);

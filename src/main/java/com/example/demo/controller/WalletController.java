@@ -9,7 +9,6 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 import java.util.List;
 import java.util.Optional;
-
 @RestController
 @CrossOrigin("*")
 @RequestMapping("user{userId}/wallets")
@@ -25,7 +24,6 @@ public class WalletController {
         }else {
             return new ResponseEntity<>(HttpStatus.BAD_REQUEST);
         }
-
     }
     @GetMapping("/detail/{id}")
     private ResponseEntity<Wallet> findOne(@PathVariable Long userId,@PathVariable Long id){
@@ -38,7 +36,6 @@ public class WalletController {
         }else {
             return new ResponseEntity<>(HttpStatus.BAD_REQUEST);
         }
-
     }
     @PostMapping()
     private  ResponseEntity<Void> create(@PathVariable Optional<Long> userId,@RequestBody Wallet wallet){
@@ -50,7 +47,6 @@ public class WalletController {
         }else {
             return new ResponseEntity<>(HttpStatus.BAD_REQUEST);
         }
-
     }
     @PutMapping("/{id}")
     private ResponseEntity<Void> update(@PathVariable Long userId,@PathVariable Long id,@RequestBody Wallet wallet){

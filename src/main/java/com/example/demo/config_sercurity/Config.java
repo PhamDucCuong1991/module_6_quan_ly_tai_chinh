@@ -30,15 +30,15 @@ public class Config extends WebSecurityConfigurerAdapter {
         http.csrf().ignoringAntMatchers("/**");
         http.authorizeRequests()
                 .antMatchers( "/user/login", "/home").permitAll()
-                .antMatchers("/**").permitAll();
-//                .hasAnyRole("USER")
-//                .anyRequest().authenticated()
-//                .and().csrf().disable();
-//        http.addFilterBefore(jwtAuthenticationFilter, UsernamePasswordAuthenticationFilter.class)
-//                .exceptionHandling();
-//        http.sessionManagement()
-//                .sessionCreationPolicy(SessionCreationPolicy.STATELESS);
-//        http.cors();
+                .antMatchers("/**")
+                .hasAnyRole("USER")
+                .anyRequest().authenticated()
+                .and().csrf().disable();
+        http.addFilterBefore(jwtAuthenticationFilter, UsernamePasswordAuthenticationFilter.class)
+                .exceptionHandling();
+        http.sessionManagement()
+                .sessionCreationPolicy(SessionCreationPolicy.STATELESS);
+        http.cors();
     }
     // xac thực
     @Override
