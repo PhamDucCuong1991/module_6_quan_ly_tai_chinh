@@ -35,7 +35,7 @@ public class PlanController {
        Account account= accountService.findAccountById(userId);
        plan.setAccount(account);
         planService.save(plan);
-        return new ResponseEntity<>(HttpStatus.ACCEPTED);
+        return new ResponseEntity<>(HttpStatus.CREATED);
     }
     @PutMapping("/{id}")
     private ResponseEntity<Void> update(@PathVariable Long userId,@PathVariable Long id,@RequestBody Plan plan){
