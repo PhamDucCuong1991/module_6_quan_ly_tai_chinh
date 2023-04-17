@@ -10,6 +10,7 @@ import org.springframework.stereotype.Service;
 
 import java.time.LocalDateTime;
 import java.util.List;
+import java.util.Optional;
 
 @Service
 public class CashService implements ICrudCash {
@@ -38,8 +39,8 @@ public class CashService implements ICrudCash {
     }
 
     @Override
-    public List<Cash> findCashByIdUser(Long id) {
-        return cashRepository.findCashByUserId(id);
+    public List<Cash> findCashByIdUser(Optional<Long> userId) {
+        return cashRepository.findCashByUserId(userId);
     }
 
     @Override

@@ -9,6 +9,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
+import java.util.Optional;
 
 @Service
 public class PlanService implements ICrudPlan {
@@ -16,8 +17,8 @@ public class PlanService implements ICrudPlan {
     public PlanRepository planRepository;
 
     @Override
-    public List<Plan> findAll() {
-        return planRepository.findAll();
+    public List<Plan> findAll(Optional<Long> userId) {
+        return planRepository.findAllPlan(userId);
     }
 
     @Override
