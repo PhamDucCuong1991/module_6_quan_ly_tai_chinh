@@ -41,7 +41,7 @@ public class CashController {
     private ResponseEntity<Cash> findOne(@PathVariable Long userId,@PathVariable Long id){
         return new ResponseEntity<>(cashService.findOne(id),HttpStatus.OK);
     }
-    @PostMapping("/{userId}")
+    @PostMapping()
     private ResponseEntity<Void> create(@PathVariable Optional<Long> userId,@RequestBody Cash cash){
         if (userId.isPresent()){
             Account account=accountService.findAccountById(userId.get());
