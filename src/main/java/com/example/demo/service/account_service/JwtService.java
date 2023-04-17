@@ -1,20 +1,18 @@
 package com.example.demo.service.account_service;
 
+import java.util.Date;
 import io.jsonwebtoken.Jwts;
 import io.jsonwebtoken.SignatureAlgorithm;
 import org.springframework.security.core.Authentication;
 import org.springframework.security.core.userdetails.User;
 import org.springframework.stereotype.Service;
 
-import java.util.Date;
-
 @Service
 public class JwtService {
     // key để mã hóa token.
-    private static final String SECRET_KEY = "9999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999";
+    private static final String SECRET_KEY = System.getenv("JWT_KEY");
     // thời gian để token sống.
     private static final long EXPIRE_TIME = 60*60*24;
-
 
     // hàm tạo ra token
     public String createToken(Authentication authentication) {
@@ -37,4 +35,5 @@ public class JwtService {
                 .getBody().getSubject();
         return userName;
     }
+
 }
