@@ -34,6 +34,7 @@ public class Account implements UserDetails {
     private LocalDate birthday;
     private String gender;
     private String phoneNumber;
+    private boolean status;
     @ManyToOne
     private Role role;
     public Account(Long id, String username, String password) {
