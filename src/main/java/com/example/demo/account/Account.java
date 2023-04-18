@@ -6,10 +6,8 @@ import org.springframework.security.core.GrantedAuthority;
 import org.springframework.security.core.userdetails.UserDetails;
 import javax.persistence.*;
 import javax.validation.constraints.NotNull;
-import java.util.Collection;
-import java.util.HashSet;
-import java.util.List;
-import java.util.Set;
+import java.util.*;
+
 @Data
 @Entity
 @NoArgsConstructor
@@ -25,7 +23,9 @@ public class Account implements UserDetails {
     @NotNull
     private String password;
     private String fullName;
+    private Date birthday;
     private String avatar;
+    private boolean gender;
     private String address;
     private String phoneNumber;
     private boolean status;
