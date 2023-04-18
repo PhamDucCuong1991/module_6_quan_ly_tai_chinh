@@ -48,24 +48,22 @@ public class AccountController {
     @PostMapping("/register")
     public boolean register(@RequestBody Account account) {
 
-        if(accountService.checkRegister(account.getUsername())) {
-
+        if (accountService.checkRegister(account.getUsername())) {
             account.setStatus(false);
             accountService.save(account);
-            String link = "http://localhost:3000/confirm-email/"+ account.getId();
+            String link = "http://localhost:3000/confirm-email/" + account.getId();
             String to = account.getUsername();
             String subject = "Register success!";
-            String text= "Ma xan nhan cua ban la: "+ link;
-            emailService.sendMail(to,subject,text);
+            String text = "Please click this link to confirm: " + link;
+            emailService.sendMail(to, subject, text);
             return true;
-
         }
 
         return false;
     }
 
     @GetMapping("/confirm/{id}")
-    public void confirm(@PathVariable Long id){
+    public void confirm(@PathVariable Long id) {
         Account account = accountService.findAccountById(id);
         account.setStatus(true);
         accountService.save(account);
@@ -73,8 +71,24 @@ public class AccountController {
     }
 
     @GetMapping("/{id}")
-    public Account findOne(@PathVariable Long id){
+    public Account findOne(@PathVariable Long id) {
         return accountService.findAccountById(id);
+    }
+
+    @PutMapping("/changePassword")
+    public void changePassword(@RequestBody Account account) {
+        Account account1 = accountService.findAccountById(account.getId());
+        account1.setPassword(account.getPassword());
+        accountService.save(account1);
+    }
+
+    @PutMapping("/update/{id}")
+    public boolean update(@RequestBody Account account, @PathVariable Long id) {
+        if (accountService.findAccountById(id).isStatus()) {
+            accountService.save(account);
+            return true;
+        }
+        return false;
     }
 
 }
