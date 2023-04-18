@@ -5,6 +5,8 @@ import com.example.demo.account.Role;
 import com.example.demo.service.account_service.AccountService;
 import com.example.demo.service.account_service.JwtService;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.HttpStatus;
+import org.springframework.http.ResponseEntity;
 import org.springframework.security.authentication.AuthenticationManager;
 import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
 import org.springframework.security.core.Authentication;
@@ -44,6 +46,17 @@ public class AccountController {
         account.setRole(role);
         account.setStatus(true);
         accountService.save(account);
+    }
+
+    @PutMapping("/update/{id}")
+    private ResponseEntity<Void> updateProfile(@PathVariable Long id, @RequestBody Account account){
+        Account account1=accountService.findAccountById(id);
+        if (account1!=null){
+            account.setId(id);
+            accountService.save(account);
+            return new ResponseEntity<>(HttpStatus.OK);
+        }
+        return new ResponseEntity<>(HttpStatus.BAD_REQUEST);
     }
     @GetMapping("/{id}")
     public Account findOne(@PathVariable Long id){
