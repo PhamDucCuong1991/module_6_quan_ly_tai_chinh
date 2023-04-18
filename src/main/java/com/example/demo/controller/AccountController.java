@@ -59,7 +59,7 @@ public class AccountController {
         return new ResponseEntity<>(HttpStatus.BAD_REQUEST);
     }
     @GetMapping("/{id}")
-    public Account findOne(@PathVariable Long id){
-        return accountService.findAccountById(id);
+    public ResponseEntity<Account> findOne(@PathVariable Long id){
+        return new ResponseEntity<>(accountService.findAccountById(id), HttpStatus.OK);
     }
 }
