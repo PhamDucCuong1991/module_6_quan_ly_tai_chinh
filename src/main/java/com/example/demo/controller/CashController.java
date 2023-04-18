@@ -3,7 +3,11 @@ import com.example.demo.Model.Cash;
 import com.example.demo.account.Account;
 import com.example.demo.service.account_service.AccountService;
 import com.example.demo.service.account_service.impl.CashService;
+import com.example.demo.service.account_service.impl.WalletService;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.Pageable;
+import org.springframework.data.web.PageableDefault;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.security.core.parameters.P;
@@ -19,10 +23,12 @@ public class CashController {
     public CashService cashService;
     @Autowired
     public AccountService accountService;
+    @Autowired
+    public WalletService walletService;
     @GetMapping()
-    public ResponseEntity<List<Cash>> findCashByID(@PathVariable Optional<Long> userId){
+    public ResponseEntity<Page<Cash>> findCashByID(@PageableDefault(value = 5) Pageable pageable, @PathVariable Optional<Long> userId){
         if (userId.isPresent()){
-            return new ResponseEntity<>(cashService.findCashByIdUser(userId), HttpStatus.OK);
+            return new ResponseEntity<>(cashService.findCashByIdUser(pageable,userId), HttpStatus.OK);
         }else {
             return new ResponseEntity<>(HttpStatus.BAD_REQUEST);
         }

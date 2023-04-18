@@ -8,5 +8,5 @@ public interface ICrudWallet {
     void save(Wallet wallet);
     void delete(Long id);
     Double sumMoney(Optional<Long> id);
-
+    Wallet findWalletByUserId(Long userId,Long walletId);
 }

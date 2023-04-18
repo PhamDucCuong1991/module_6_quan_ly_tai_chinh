@@ -30,4 +30,9 @@ public class WalletService implements ICrudWallet {
     public Double sumMoney(Optional<Long> id) {
         return walletRepository.sumMoneyByUserId(id);
     }
+
+    @Override
+    public Wallet findWalletByUserId(Long userId, Long walletId) {
+        return walletRepository.findWalletByIdAccount(userId,walletId);
+    }
 }

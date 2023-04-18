@@ -20,11 +20,11 @@ public class Wallet {
     @NotNull
     @Positive
     private Double totalMoney;
-    @Positive
-    private Double moneyLimit;
     @NotNull
     private String icon;
     private String backgroundColor;
+    @Positive
+    private Double moneyLimit;
     @OneToOne
     private Account account;
 }

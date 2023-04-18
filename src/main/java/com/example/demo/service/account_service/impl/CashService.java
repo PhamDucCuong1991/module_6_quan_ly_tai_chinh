@@ -1,9 +1,10 @@
 package com.example.demo.service.account_service.impl;
 import com.example.demo.Model.Cash;
 import com.example.demo.repository.CashRepository;
-
 import com.example.demo.service.account_service.ICrudCash;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Service;
 
 import java.time.LocalDateTime;
@@ -14,8 +15,8 @@ public class CashService implements ICrudCash {
     @Autowired
   private CashRepository cashRepository;
     @Override
-    public List<Cash> findAll() {
-        return cashRepository.findAll();
+    public Page<Cash> findAll(Pageable pageable) {
+        return cashRepository.findAll(pageable);
     }
     @Override
     public Cash findOne(Long id) {
@@ -30,8 +31,8 @@ public class CashService implements ICrudCash {
     cashRepository.deleteById(id);
     }
     @Override
-    public List<Cash> findCashByIdUser(Optional<Long> userId) {
-        return cashRepository.findCashByUserId(userId);
+    public Page<Cash> findCashByIdUser(Pageable pageable, Optional<Long> userId) {
+        return cashRepository.findCashByUserId(pageable,userId);
     }
     @Override
     public List<Cash> findCashByDate(Long userId, LocalDateTime startDate, LocalDateTime endDate) {
