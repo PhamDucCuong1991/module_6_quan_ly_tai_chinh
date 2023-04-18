@@ -6,6 +6,7 @@ import org.springframework.security.core.GrantedAuthority;
 import org.springframework.security.core.userdetails.UserDetails;
 import javax.persistence.*;
 import javax.validation.constraints.NotNull;
+import java.time.LocalDate;
 import java.util.Collection;
 import java.util.HashSet;
 import java.util.List;
@@ -28,8 +29,11 @@ public class Account implements UserDetails {
     private String fullName;
     private String avatar;
     private String address;
+    private Integer zip;
+    private String city;
+    private LocalDate birthday;
+    private String gender;
     private String phoneNumber;
-    private boolean status;
     @ManyToOne
     private Role role;
     public Account(Long id, String username, String password) {
