@@ -6,6 +6,7 @@ import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 import java.util.List;
+import java.util.Optional;
 @RestController
 @CrossOrigin("*")
 @RequestMapping("/categories")
@@ -23,7 +24,7 @@ public class CategoryController {
     @PostMapping
     private ResponseEntity<Void> create(@RequestBody Category category){
         categoryService.save(category);
-        return new ResponseEntity<>(HttpStatus.ACCEPTED);
+        return new ResponseEntity<>(HttpStatus.CREATED);
     }
     @PutMapping("/{id}")
     private ResponseEntity<Void> update(@PathVariable Long id,@RequestBody Category category){
