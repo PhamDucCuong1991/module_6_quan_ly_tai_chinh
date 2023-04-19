@@ -51,7 +51,9 @@ public class WalletController {
     @PutMapping("/{id}")
     private ResponseEntity<Void> update(@PathVariable Long userId,@PathVariable Long id,@RequestBody Wallet wallet){
         Wallet wallet1=walletService.findOne(id);
+        Account account=accountService.findAccountById(userId);
         if (wallet1!=null){
+            wallet.setAccount(account);
             walletService.save(wallet);
             return new ResponseEntity<>(HttpStatus.ACCEPTED);
         }

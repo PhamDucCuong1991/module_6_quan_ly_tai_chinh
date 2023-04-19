@@ -24,7 +24,7 @@ public class Wallet {
     private String icon;
     private String backgroundColor;
     @Positive
-    private Double moneyLimit;
+    private Double limitMoney;
     @OneToOne
     private Account account;
 }
