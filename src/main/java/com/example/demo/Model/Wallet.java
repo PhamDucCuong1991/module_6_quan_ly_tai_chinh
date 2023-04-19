@@ -16,12 +16,15 @@ public class Wallet {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
-    private String nameCard;
+    private String name;
     @NotNull
     @Positive
-    private Double moneyAmount;
-    @ManyToOne
-    private WalletCategory walletCategory;
+    private Double totalMoney;
+    @NotNull
+    private String icon;
+    private String backgroundColor;
+    @Positive
+    private Double moneyLimit;
     @OneToOne
     private Account account;
 }

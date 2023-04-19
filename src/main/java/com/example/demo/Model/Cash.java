@@ -8,6 +8,7 @@ import org.springframework.beans.factory.annotation.Value;
 import javax.persistence.*;
 import javax.validation.constraints.NotNull;
 import javax.validation.constraints.Positive;
+import java.time.LocalDate;
 import java.time.LocalDateTime;
 @Data
 @Entity
@@ -19,7 +20,7 @@ public class Cash {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
-    private LocalDateTime date;
+    private LocalDate date;
     @NotNull
     private String name;
     @Positive
@@ -30,5 +31,8 @@ public class Cash {
     private Category category;
     @ManyToOne
     private Account account;
+
+    @ManyToOne
+    private Wallet wallet;
 
 }

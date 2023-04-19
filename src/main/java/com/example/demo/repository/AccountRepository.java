@@ -11,9 +11,9 @@ import java.util.List;
 public interface AccountRepository extends JpaRepository<Account,Long> {
     @Query(value = "select p from Account p where p.status=true ")
     List<Account> findAllByStatus();
-
     Account findAccountByUsername(String username);
-    Account findAccountById(Long id);
+    @Query(value = "select p from Account p where p.id=:userId ")
+    Account findAccountById(@Param("userId") Long id);
     @Override
     void deleteById(Long id);
 }

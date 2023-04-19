@@ -6,6 +6,7 @@ import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 import java.util.List;
+import java.util.Optional;
 @RestController
 @CrossOrigin("*")
 @RequestMapping("/categories")
@@ -20,10 +21,19 @@ public class CategoryController {
     private ResponseEntity<Category> findOne(@PathVariable Long id){
         return new ResponseEntity<>(categoryService.findOne(id),HttpStatus.OK);
     }
+
+    @GetMapping("/expences")
+    public ResponseEntity<List<Category>> findAllByExpence(){
+        return new ResponseEntity<>(categoryService.findAllByExpences(), HttpStatus.OK);
+    }
+    @GetMapping("/income")
+    public ResponseEntity<List<Category>> findAllByIncome(){
+        return new ResponseEntity<>(categoryService.findAllByIncome(), HttpStatus.OK);
+    }
     @PostMapping
     private ResponseEntity<Void> create(@RequestBody Category category){
         categoryService.save(category);
-        return new ResponseEntity<>(HttpStatus.ACCEPTED);
+        return new ResponseEntity<>(HttpStatus.CREATED);
     }
     @PutMapping("/{id}")
     private ResponseEntity<Void> update(@PathVariable Long id,@RequestBody Category category){
