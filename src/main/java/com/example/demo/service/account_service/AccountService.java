@@ -13,7 +13,7 @@ import org.springframework.stereotype.Service;
 import java.util.Collection;
 import java.util.List;
 @Service
-public class AccountService implements UserDetailsService {
+public class AccountService implements UserDetailsService,ICrudAccount {
     @Autowired
     private AccountRepository accountRepository;
     @Override
@@ -24,12 +24,26 @@ public class AccountService implements UserDetailsService {
     public Account findAccountByUserName(String username){
         return accountRepository.findAccountByUsername(username);
     }
+    @Override
     public Account findAccountById(Long id){
         return accountRepository.findAccountById(id);
     }
+
+    @Override
     public void save(Account account){
         accountRepository.save(account);
     }
+
+    @Override
+    public void delete(Long id) {
+
+    }
+
+    @Override
+    public Account login(String username, String password) {
+        return null;
+    }
+
     public boolean checkRegister(String username){
         if(accountRepository.findAccountByUsername(username)!=null){
             return false;
@@ -39,6 +53,12 @@ public class AccountService implements UserDetailsService {
     public List<Account> findAll(){
         return accountRepository.findAll();
     }
+
+    @Override
+    public Account findOne(Long id) {
+        return null;
+    }
+
     public List<Account> findAllByStatus(){
         return accountRepository.findAllByStatus();
     }
