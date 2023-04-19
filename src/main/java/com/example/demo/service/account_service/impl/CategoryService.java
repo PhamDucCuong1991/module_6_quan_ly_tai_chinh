@@ -27,4 +27,14 @@ public class CategoryService implements ICrudCategory {
     public void delete(Long id) {
     categoryRepository.deleteById(id);
     }
+
+    @Override
+    public List<Category> findAllByIncome() {
+        return categoryRepository.findAllByIncome();
+    }
+
+    @Override
+    public List<Category> findAllByExpences() {
+        return categoryRepository.findAllByExpense();
+    }
 }
