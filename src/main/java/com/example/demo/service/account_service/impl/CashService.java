@@ -6,6 +6,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Service;
+import java.time.LocalDate;
 
 import java.time.LocalDateTime;
 import java.util.List;
@@ -35,7 +36,7 @@ public class CashService implements ICrudCash {
         return cashRepository.findCashByUserId(pageable,userId);
     }
     @Override
-    public List<Cash> findCashByDate(Long userId, LocalDateTime startDate, LocalDateTime endDate) {
+    public List<Cash> findCashByDate(Long userId, LocalDate startDate, LocalDate endDate) {
         return cashRepository.findCashByDateStart(userId,startDate,endDate);
     }
 }

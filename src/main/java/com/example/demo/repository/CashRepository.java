@@ -11,11 +11,12 @@ import org.springframework.transaction.annotation.Transactional;
 import java.time.LocalDateTime;
 import java.util.List;
 import java.util.Optional;
+import java.time.LocalDate;
 @Transactional
 @Repository
 public interface CashRepository extends JpaRepository<Cash,Long> {
 @Query(value = "select c from Cash c where c.account.id=:userId")
 Page<Cash> findCashByUserId(Pageable pageable, @Param("userId") Optional<Long> id);
 @Query(value = "select c from Cash c where c.account.id=:userId and c.date>=:startDate and c.date<=:endDate")
-    List<Cash> findCashByDateStart(@Param("userId")Long id, @Param("startDate")LocalDateTime starDate,@Param("endDate")LocalDateTime endDate);
+    List<Cash> findCashByDateStart(@Param("userId")Long id, @Param("startDate")LocalDate starDate,@Param("endDate")LocalDate endDate);
 }

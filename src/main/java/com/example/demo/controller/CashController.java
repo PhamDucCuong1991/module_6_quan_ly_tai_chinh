@@ -12,6 +12,8 @@ import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.security.core.parameters.P;
 import org.springframework.web.bind.annotation.*;
+
+import java.time.LocalDate;
 import java.time.LocalDateTime;
 import java.util.List;
 import java.util.Optional;
@@ -37,8 +39,8 @@ public class CashController {
     private ResponseEntity<List<Cash>> findCashByDate(@PathVariable Optional<Long> userId,
     @PathVariable String start, @PathVariable String end){
         if (userId.isPresent()){
-            LocalDateTime startDate=LocalDateTime.parse(start);
-            LocalDateTime endDate=LocalDateTime.parse(end);
+            LocalDate startDate=LocalDate.parse(start);
+            LocalDate endDate=LocalDate.parse(end);
             return new ResponseEntity<>(cashService.findCashByDate(userId.get(),startDate,endDate),HttpStatus.OK);
         }
         return new ResponseEntity<>(HttpStatus.BAD_REQUEST);
