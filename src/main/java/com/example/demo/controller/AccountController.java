@@ -83,12 +83,16 @@ public class AccountController {
     }
 
     @PutMapping("/update/{id}")
-    public boolean update(@RequestBody Account account, @PathVariable Long id) {
-        if (accountService.findAccountById(id).isStatus()) {
+    public Account update( @PathVariable Long id,@RequestBody Account account) {
+        Account account1 = accountService.findAccountById(id);
+        if (accountService.findAllByStatus().contains(account1)) {
+            account.setStatus(true);
+            account.setUsername(account1.getUsername());
+            account.setPassword(account.getPassword());
             accountService.save(account);
-            return true;
+            return account;
         }
-        return false;
+        return null;
     }
 
 }

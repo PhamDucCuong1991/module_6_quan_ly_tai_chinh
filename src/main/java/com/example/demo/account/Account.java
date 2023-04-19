@@ -23,9 +23,9 @@ public class Account implements UserDetails {
     @NotNull
     private String password;
     private String fullName;
-    private Date birthday;
+    private String birthday;
     private String avatar;
-    private boolean gender;
+    private String gender;
     private String address;
     private String phoneNumber;
     private boolean status;
