@@ -67,7 +67,6 @@ public class AccountController {
         Account account = accountService.findAccountById(id);
         account.setStatus(true);
         accountService.save(account);
-
     }
 
     @GetMapping("/{id}")
@@ -93,6 +92,21 @@ public class AccountController {
             return account;
         }
         return null;
+    }
+
+    @GetMapping("/back-password/{email}")
+    public boolean backPassword(@PathVariable String email) {
+
+        Account account =accountService.findAccountByUserName(email);
+        if(account!= null){
+            String to = account.getUsername();
+            String subject = "Request success!";
+            String text = "Your password: " + account.getPassword();
+            emailService.sendMail(to, subject, text);
+            return true;
+        }
+
+        return false;
     }
 
 }
