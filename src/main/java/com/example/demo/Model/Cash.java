@@ -1,15 +1,11 @@
 package com.example.demo.Model;
-
 import com.example.demo.account.Account;
 import lombok.*;
-import org.apache.catalina.User;
-import org.springframework.beans.factory.annotation.Value;
-
 import javax.persistence.*;
 import javax.validation.constraints.NotNull;
 import javax.validation.constraints.Positive;
 import java.time.LocalDate;
-import java.time.LocalDateTime;
+
 @Data
 @Entity
 @NoArgsConstructor
@@ -31,8 +27,6 @@ public class Cash {
     private Category category;
     @ManyToOne
     private Account account;
-
     @ManyToOne
     private Wallet wallet;
-
 }

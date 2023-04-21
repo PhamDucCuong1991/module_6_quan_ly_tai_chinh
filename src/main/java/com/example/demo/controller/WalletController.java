@@ -1,8 +1,8 @@
 package com.example.demo.controller;
 import com.example.demo.Model.Wallet;
 import com.example.demo.account.Account;
-import com.example.demo.service.account_service.AccountService;
-import com.example.demo.service.account_service.impl.WalletService;
+import com.example.demo.account.service.AccountService;
+import com.example.demo.service.ICrudWallet;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
@@ -12,15 +12,15 @@ import java.util.Optional;
 @RestController
 @CrossOrigin("*")
 @RequestMapping("user{userId}/wallets")
-public class WalletController {
+public class  WalletController {
     @Autowired
-    public WalletService walletService;
+    public ICrudWallet walletService;
     @Autowired
     public AccountService  accountService;
     @GetMapping()
     public ResponseEntity<List<Wallet>> findAll(@PathVariable Optional<Long> userId){
         if (userId.isPresent()){
-            return new ResponseEntity<>(walletService.findAll(userId), HttpStatus.OK);
+            return new ResponseEntity<>(walletService.findAll(userId.get()), HttpStatus.OK);
         }else {
             return new ResponseEntity<>(HttpStatus.BAD_REQUEST);
         }
@@ -32,7 +32,7 @@ public class WalletController {
     @GetMapping("/total")
     private ResponseEntity<Double> sumMoney(@PathVariable Optional<Long> userId){
         if (userId.isPresent()){
-            return new ResponseEntity<>(walletService.sumMoney(userId),HttpStatus.OK);
+            return new ResponseEntity<>(walletService.sumMoney(userId.get()),HttpStatus.OK);
         }else {
             return new ResponseEntity<>(HttpStatus.BAD_REQUEST);
         }

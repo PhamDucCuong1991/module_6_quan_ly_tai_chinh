@@ -1,4 +1,4 @@
-package com.example.demo.service.account_service;
+package com.example.demo.config_sercurity;
 import io.jsonwebtoken.Jwts;
 import io.jsonwebtoken.SignatureAlgorithm;
 import org.springframework.security.core.Authentication;

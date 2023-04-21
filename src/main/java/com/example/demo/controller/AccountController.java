@@ -2,8 +2,8 @@ package com.example.demo.controller;
 import com.example.demo.account.Account;
 import com.example.demo.account.AccountToken;
 import com.example.demo.account.Role;
-import com.example.demo.service.account_service.AccountService;
-import com.example.demo.service.account_service.JwtService;
+import com.example.demo.account.service.AccountService;
+import com.example.demo.config_sercurity.JwtService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
@@ -12,8 +12,7 @@ import org.springframework.security.authentication.UsernamePasswordAuthenticatio
 import org.springframework.security.core.Authentication;
 import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.web.bind.annotation.*;
-import java.util.ArrayList;
-import java.util.List;
+
 @RestController
 @CrossOrigin("*")
 @RequestMapping("/user")

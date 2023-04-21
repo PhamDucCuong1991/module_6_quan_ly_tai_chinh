@@ -1,17 +1,16 @@
-package com.example.demo.service.account_service.impl;
+package com.example.demo.service.impl;
 import com.example.demo.Model.Wallet;
 import com.example.demo.repository.WalletRepository;
-import com.example.demo.service.account_service.ICrudWallet;
+import com.example.demo.service.ICrudWallet;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import java.util.List;
-import java.util.Optional;
 @Service
 public class WalletService implements ICrudWallet {
     @Autowired
     public WalletRepository walletRepository;
     @Override
-    public List<Wallet> findAll(Optional<Long> userID) {
+    public List<Wallet> findAll(Long userID) {
         return walletRepository.selectCash(userID);
     }
     @Override
@@ -27,10 +26,9 @@ public class WalletService implements ICrudWallet {
     walletRepository.deleteById(id);
     }
     @Override
-    public Double sumMoney(Optional<Long> id) {
+    public Double sumMoney(Long id) {
         return walletRepository.sumMoneyByUserId(id);
     }
-
     @Override
     public Wallet findWalletByUserId(Long userId, Long walletId) {
         return walletRepository.findWalletByIdAccount(userId,walletId);

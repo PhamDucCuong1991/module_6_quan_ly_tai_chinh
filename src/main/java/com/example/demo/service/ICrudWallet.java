@@ -1,12 +1,11 @@
-package com.example.demo.service.account_service;
+package com.example.demo.service;
 import com.example.demo.Model.Wallet;
 import java.util.List;
-import java.util.Optional;
-public interface ICrudWallet {
-    List<Wallet> findAll(Optional<Long> userId);
+public interface ICrudWallet extends ICrud<Wallet>{
+    List<Wallet> findAll(Long userId);
     Wallet findOne(Long id);
     void save(Wallet wallet);
     void delete(Long id);
-    Double sumMoney(Optional<Long> id);
+    Double sumMoney(Long id);
     Wallet findWalletByUserId(Long userId,Long walletId);
 }
