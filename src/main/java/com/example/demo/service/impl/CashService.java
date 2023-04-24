@@ -5,6 +5,7 @@ import com.example.demo.service.ICrudCash;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
+import org.springframework.security.core.parameters.P;
 import org.springframework.stereotype.Service;
 import java.time.LocalDate;
 import java.util.List;
@@ -33,16 +34,17 @@ public class CashService implements ICrudCash {
     public Page<Cash> findCashByIdUser(Pageable pageable, Long userId) {
         return cashRepository.findCashByUserId(pageable,userId);
     }
+
     @Override
     public List<Cash> findCashByDate(Long userId, LocalDate startDate, LocalDate endDate) {
         return cashRepository.findCashByDateStart(userId,startDate,endDate);
     }
     @Override
-    public List<Cash> findCashByIdWallet(Long userId, Long walletId, LocalDate startDate, LocalDate endDate) {
-            return cashRepository.searchCash(userId,walletId);
+    public Page<Cash> findCashByIdWallet(Pageable pageable,Long userId, Long walletId, LocalDate startDate, LocalDate endDate) {
+            return cashRepository.findCashByWalletId(pageable,userId,walletId,startDate,endDate);
     }
     @Override
-    public List<Cash> findCash(Long userId, Long walletID) {
-        return cashRepository.searchCash(userId,walletID);
+    public Page<Cash> findCash(Pageable pageable,Long userId, Long walletID) {
+        return cashRepository.searchCash(pageable,userId,walletID);
     }
 }

@@ -6,6 +6,7 @@ import com.example.demo.service.ICrudCash;
 import com.example.demo.service.ICrudWallet;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;
+import org.springframework.data.domain.PageRequest;
 import org.springframework.data.domain.Pageable;
 import org.springframework.data.web.PageableDefault;
 import org.springframework.http.HttpStatus;
@@ -71,16 +72,16 @@ public class CashController {
         cashService.delete(id);
         return new ResponseEntity<>(HttpStatus.ACCEPTED);
     }
-    @GetMapping("/{walletId}")
-    private ResponseEntity<List<Cash>> findCashByWalletId(@PathVariable Optional<Long> userId,@PathVariable Optional<Long> walletId,
+    @GetMapping("/{walletId}/page{index}")
+    private ResponseEntity<Page<Cash>> findCashByWalletId(@PathVariable int index,@PathVariable Optional<Long> userId,@PathVariable Optional<Long> walletId,
                                                           @RequestParam Optional<String> start,@RequestParam Optional<String> end ){
+        Pageable pageable= PageRequest.of(index,5);
         if (userId.isPresent()&&walletId.isPresent()&&start.isPresent()&&end.isPresent()){
             LocalDate startDate=LocalDate.parse(start.get());
             LocalDate  endDate=LocalDate.parse(end.get());
-            return new ResponseEntity<>(cashService.findCashByIdWallet(userId.get(),walletId.get(),startDate,endDate),HttpStatus.OK);
+            return new ResponseEntity<>(cashService.findCashByIdWallet(pageable,userId.get(),walletId.get(),startDate,endDate),HttpStatus.OK);
         }else if (userId.isPresent()&&walletId.isPresent()){
-
-            return new ResponseEntity<>(cashService.findCash(userId.get(),walletId.get()),HttpStatus.OK);
+            return new ResponseEntity<>(cashService.findCash(pageable,userId.get(),walletId.get()),HttpStatus.OK);
         }
    return new ResponseEntity<>(HttpStatus.BAD_REQUEST);
     }

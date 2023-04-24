@@ -17,8 +17,8 @@ Page<Cash> findCashByUserId(Pageable pageable, @Param("userId") Long id);
 @Query(value = "select c from Cash c where c.account.id=:userId and c.date>=:startDate and c.date<=:endDate")
     List<Cash> findCashByDateStart(@Param("userId")Long id, @Param("startDate")LocalDate starDate,@Param("endDate")LocalDate endDate);
 @Query(value = "select c from Cash  c where c.account.id=:userId and c.wallet.id=:walletId and c.date=:startDate and c.date=:endDate")
-    List<Cash> findCashByWalletId(@Param("userId")Long userId ,@Param("walletId")Long walletId,@Param("startDate")LocalDate startDate,
+    Page<Cash> findCashByWalletId(Pageable pageable,@Param("userId")Long userId ,@Param("walletId")Long walletId,@Param("startDate")LocalDate startDate,
                                   @Param("endDate")LocalDate endDate);
 @Query(value = "select c from Cash c where c.account.id=:userId and c.wallet.id=:walletId")
-    List<Cash> searchCash(@Param("userId")Long userId,@Param("walletId")Long walletId);
+    Page<Cash> searchCash(Pageable pageable,@Param("userId")Long userId,@Param("walletId")Long walletId);
 }
