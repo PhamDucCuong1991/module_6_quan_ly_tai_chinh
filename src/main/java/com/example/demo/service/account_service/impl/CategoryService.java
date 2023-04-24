@@ -12,8 +12,8 @@ public class CategoryService implements ICrudCategory {
     @Autowired
     public CategoryRepository categoryRepository;
     @Override
-    public List<Category> findAll() {
-        return categoryRepository.findAll();
+    public List<Category> findAll(Long userId) {
+        return categoryRepository.findCById(userId);
     }
     @Override
     public Category findOne(Long id) {
@@ -36,5 +36,33 @@ public class CategoryService implements ICrudCategory {
     @Override
     public List<Category> findAllByExpences() {
         return categoryRepository.findAllByExpense();
+    }
+    @Override
+    public List<Category> findCategoryExpences(Long id) {
+        return categoryRepository.selectCategoryExByUserId(id);
+    }
+    @Override
+    public List<Category> findCategoryIncome(Long id) {
+        return categoryRepository.selectCategoryInByUserId(id);
+    }
+
+    @Override
+    public List<Category> findCategoryExpencesOnlyUserId(Long id) {
+        return categoryRepository.selectCategoryExByOnlyUserId(id);
+    }
+
+    @Override
+    public List<Category> findCategoryIncomeOnlyUserId(Long id) {
+        return categoryRepository.selectCategoryInByOnlyUserId(id);
+    }
+
+    @Override
+    public List<Category> findCategoryExpencesDefault() {
+        return categoryRepository.selectCategoryExDefault();
+    }
+
+    @Override
+    public List<Category> findCategoryIncomeDefault() {
+        return categoryRepository.selectCategoryInDefault();
     }
 }

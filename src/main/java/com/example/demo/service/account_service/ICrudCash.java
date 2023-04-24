@@ -13,6 +13,6 @@ public interface ICrudCash {
     void save(Cash cash);
     void delete(Long id);
     Page<Cash> findCashByIdUser(Pageable pageable, Optional<Long> userId);
-    List<Cash> findCashByDate(Long userId, LocalDate startDate, LocalDate endDate);
+    Page<Cash> findCashByDate(Pageable pageable,Long userId, LocalDate startDate, LocalDate endDate);
 
 }

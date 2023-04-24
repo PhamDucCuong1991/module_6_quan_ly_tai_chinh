@@ -18,5 +18,5 @@ public interface CashRepository extends JpaRepository<Cash,Long> {
 @Query(value = "select c from Cash c where c.account.id=:userId")
 Page<Cash> findCashByUserId(Pageable pageable, @Param("userId") Optional<Long> id);
 @Query(value = "select c from Cash c where c.account.id=:userId and c.date>=:startDate and c.date<=:endDate")
-    List<Cash> findCashByDateStart(@Param("userId")Long id, @Param("startDate")LocalDate starDate,@Param("endDate")LocalDate endDate);
+    Page<Cash> findCashByDateStart(Pageable pageable,@Param("userId")Long id, @Param("startDate")LocalDate starDate,@Param("endDate")LocalDate endDate);
 }

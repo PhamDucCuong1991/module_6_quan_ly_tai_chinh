@@ -36,7 +36,7 @@ public class CashService implements ICrudCash {
         return cashRepository.findCashByUserId(pageable,userId);
     }
     @Override
-    public List<Cash> findCashByDate(Long userId, LocalDate startDate, LocalDate endDate) {
-        return cashRepository.findCashByDateStart(userId,startDate,endDate);
+    public Page<Cash> findCashByDate(Pageable pageable,Long userId, LocalDate startDate, LocalDate endDate) {
+        return cashRepository.findCashByDateStart(pageable,userId,startDate,endDate);
     }
 }

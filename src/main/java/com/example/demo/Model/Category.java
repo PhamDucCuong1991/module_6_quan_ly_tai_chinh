@@ -1,12 +1,11 @@
 package com.example.demo.Model;
+import com.example.demo.account.Account;
 import lombok.AllArgsConstructor;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
-import javax.persistence.Entity;
-import javax.persistence.GeneratedValue;
-import javax.persistence.GenerationType;
-import javax.persistence.Id;
+
+import javax.persistence.*;
 import javax.validation.constraints.NotNull;
 @Entity
 @NoArgsConstructor
@@ -22,4 +21,6 @@ public class Category {
     @NotNull
     private String typeCategory;
     private String icon;
+    @ManyToOne
+    private Account account;
 }

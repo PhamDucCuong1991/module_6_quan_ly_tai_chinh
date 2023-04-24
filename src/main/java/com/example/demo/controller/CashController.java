@@ -36,12 +36,12 @@ public class CashController {
         }
     }
     @GetMapping("/{start}/{end}")
-    private ResponseEntity<List<Cash>> findCashByDate(@PathVariable Optional<Long> userId,
+    private ResponseEntity<Page<Cash>> findCashByDate(@PageableDefault(value = 5) Pageable pageable,@PathVariable Optional<Long> userId,
     @PathVariable String start, @PathVariable String end){
         if (userId.isPresent()){
             LocalDate startDate=LocalDate.parse(start);
             LocalDate endDate=LocalDate.parse(end);
-            return new ResponseEntity<>(cashService.findCashByDate(userId.get(),startDate,endDate),HttpStatus.OK);
+            return new ResponseEntity<>(cashService.findCashByDate(pageable,userId.get(),startDate,endDate),HttpStatus.OK);
         }
         return new ResponseEntity<>(HttpStatus.BAD_REQUEST);
     }
@@ -59,12 +59,15 @@ public class CashController {
       return new ResponseEntity<>(HttpStatus.BAD_REQUEST);
     }
     @PutMapping("/{id}")
-    private ResponseEntity<Void> update(@PathVariable Long userId,@PathVariable Long id,@RequestBody Cash cash){
-        Cash cash1=cashService.findOne(id);
-        if (cash1!=null){
-            cash.setAccount(cash1.getAccount());
-            cashService.save(cash);
-            return new ResponseEntity<>(HttpStatus.OK);
+    private ResponseEntity<Void> update(@PathVariable Optional<Long> userId,@PathVariable Long id,@RequestBody Cash cash){
+        if (userId.isPresent()){
+            Cash cash1=cashService.findOne(id);
+            Account account=accountService.findAccountById(userId.get());
+            if (cash1!=null){
+                cash.setAccount(account);
+                cashService.save(cash);
+                return new ResponseEntity<>(HttpStatus.ACCEPTED);
+            }
         }
         return new ResponseEntity<>(HttpStatus.BAD_REQUEST);
     }
