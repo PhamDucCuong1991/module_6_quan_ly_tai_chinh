@@ -3,6 +3,7 @@ import com.example.demo.account.service.AccountService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
+import org.springframework.http.HttpMethod;
 import org.springframework.security.authentication.AuthenticationManager;
 import org.springframework.security.config.BeanIds;
 import org.springframework.security.config.annotation.authentication.builders.AuthenticationManagerBuilder;
@@ -28,16 +29,20 @@ public class Config extends WebSecurityConfigurerAdapter {
     protected void configure(HttpSecurity http) throws Exception {
         http.csrf().ignoringAntMatchers("/**");
         http.authorizeRequests()
-                .antMatchers( "/user/login", "/home").permitAll()
-                .antMatchers("/**").permitAll();
-//                .hasAnyRole("USER")
-//                .anyRequest().authenticated()
-//                .and().csrf().disable();
-//        http.addFilterBefore(jwtAuthenticationFilter, UsernamePasswordAuthenticationFilter.class)
-//                .exceptionHandling();
-//        http.sessionManagement()
-//                .sessionCreationPolicy(SessionCreationPolicy.STATELESS);
-//        http.cors();
+
+                .antMatchers(HttpMethod.DELETE).hasRole("USER")
+                .antMatchers(HttpMethod.GET).permitAll()
+                .antMatchers(HttpMethod.POST).permitAll()
+                .antMatchers(HttpMethod.PUT).hasRole("USER")
+                .antMatchers( "/user/**").permitAll()
+//                .antMatchers( "/**").permitAll()
+                .anyRequest().authenticated()
+                .and().csrf().disable();
+        http.addFilterBefore(jwtAuthenticationFilter, UsernamePasswordAuthenticationFilter.class)
+                .exceptionHandling();
+        http.sessionManagement()
+                .sessionCreationPolicy(SessionCreationPolicy.STATELESS);
+        http.cors();
     }
     // xac thực
     @Override
