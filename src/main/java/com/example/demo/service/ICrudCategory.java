@@ -1,8 +1,7 @@
-package com.example.demo.service.account_service;
+package com.example.demo.service;
 import com.example.demo.Model.Category;
-
 import java.util.List;
-public interface ICrudCategory {
+public interface ICrudCategory extends ICrud<Category> {
     List<Category> findAll(Long userId);
     List<Category> findAllByExpences();
     List<Category> findAllByIncome();

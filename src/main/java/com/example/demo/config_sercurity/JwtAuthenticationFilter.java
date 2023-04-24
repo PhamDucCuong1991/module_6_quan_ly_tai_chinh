@@ -1,6 +1,5 @@
 package com.example.demo.config_sercurity;
-import com.example.demo.service.account_service.AccountService;
-import com.example.demo.service.account_service.JwtService;
+import com.example.demo.account.service.AccountService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
 import org.springframework.security.core.context.SecurityContextHolder;
@@ -13,6 +12,7 @@ import javax.servlet.ServletException;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import java.io.IOException;
+ import com.example.demo.service.account_service.JwtService;
 @Service
 public class JwtAuthenticationFilter extends OncePerRequestFilter {
     @Autowired

@@ -1,11 +1,9 @@
-package com.example.demo.service.account_service.impl;
+package com.example.demo.service.impl;
 import com.example.demo.Model.Category;
 import com.example.demo.repository.CategoryRepository;
-
-import com.example.demo.service.account_service.ICrudCategory;
+import com.example.demo.service.ICrudCategory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
-
 import java.util.List;
 @Service
 public class CategoryService implements ICrudCategory {
@@ -27,7 +25,14 @@ public class CategoryService implements ICrudCategory {
     public void delete(Long id) {
     categoryRepository.deleteById(id);
     }
-
+    @Override
+    public List<Category> findCategoryExpences(Long id) {
+        return categoryRepository.selectCategoryExByUserId(id);
+    }
+    @Override
+    public List<Category> findCategoryIncome(Long id) {
+        return categoryRepository.selectCategoryInByUserId(id);
+    }
     @Override
     public List<Category> findAllByIncome() {
         return categoryRepository.findAllByIncome();
@@ -37,14 +42,7 @@ public class CategoryService implements ICrudCategory {
     public List<Category> findAllByExpences() {
         return categoryRepository.findAllByExpense();
     }
-    @Override
-    public List<Category> findCategoryExpences(Long id) {
-        return categoryRepository.selectCategoryExByUserId(id);
-    }
-    @Override
-    public List<Category> findCategoryIncome(Long id) {
-        return categoryRepository.selectCategoryInByUserId(id);
-    }
+
 
     @Override
     public List<Category> findCategoryExpencesOnlyUserId(Long id) {

@@ -1,7 +1,8 @@
 package com.example.demo.controller;
 import com.example.demo.Model.Category;
-import com.example.demo.service.account_service.AccountService;
-import com.example.demo.service.account_service.impl.CategoryService;
+import com.example.demo.account.Account;
+import com.example.demo.account.service.AccountService;
+import com.example.demo.service.ICrudCategory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
@@ -13,10 +14,11 @@ import java.util.Optional;
 @RequestMapping("/user{userId}/categories")
 public class CategoryController {
     @Autowired
-    public CategoryService categoryService;
+    public ICrudCategory categoryService;
 
     @Autowired
     public AccountService accountService;
+
     @GetMapping()
     public ResponseEntity<List<Category>> findAllCategory(@PathVariable Optional<Long> userId){
         if (userId.isPresent()){
@@ -39,19 +41,25 @@ public class CategoryController {
         return new ResponseEntity<>(categoryService.findAllByIncome(), HttpStatus.OK);
     }
     @PostMapping
-    private ResponseEntity<Void> create(@RequestBody Category category){
+    private ResponseEntity<Void> create(@PathVariable Long userId,@RequestBody Category category){
+        Account account=accountService.findAccountById(userId);
+        category.setAccount(account);
         categoryService.save(category);
         return new ResponseEntity<>(HttpStatus.CREATED);
     }
     @PutMapping("/{id}")
-    private ResponseEntity<Void> update(@PathVariable Long id,@RequestBody Category category){
+    private ResponseEntity<Void> update(@PathVariable Long userId,@PathVariable Long id,@RequestBody Category category){
         Category category1=categoryService.findOne(id);
+        Account account=accountService.findOne(userId);
         if (category1!=null){
+            category1.setAccount(account);
             categoryService.save(category);
             return new ResponseEntity<>(HttpStatus.ACCEPTED);
         }
         return new ResponseEntity<>(HttpStatus.BAD_REQUEST);
     }
+
+
     @DeleteMapping("/{id}")
     private ResponseEntity<Void> delete(@PathVariable Long id){
         categoryService.delete(id);

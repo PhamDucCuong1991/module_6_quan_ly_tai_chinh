@@ -45,6 +45,9 @@ dependencies {
     // cấu hình email spring
 //    implementation group: 'org.springframework.boot', name: 'spring-boot-starter-mail', version: '1.2.0.RELEASE'
     implementation 'org.springframework.boot:spring-boot-starter-mail'
+
+    compileOnly "org.springframework.social:spring-social-facebook:2.0.3.RELEASE"
+    compileOnly 'org.springframework.social:spring-social-web:1.1.6.RELEASE'
 }
 
 tasks.named('test') {

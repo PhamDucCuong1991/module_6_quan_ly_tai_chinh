@@ -2,10 +2,13 @@ package com.example.demo.controller;
 
 import com.example.demo.account.Account;
 import com.example.demo.account.AccountToken;
-import com.example.demo.service.account_service.AccountService;
+
+import com.example.demo.account.service.AccountService;
 import com.example.demo.service.account_service.JwtService;
 import com.example.demo.service.email_service.EmailService;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.HttpStatus;
+import org.springframework.http.ResponseEntity;
 import org.springframework.security.authentication.AuthenticationManager;
 import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
 import org.springframework.security.core.Authentication;
@@ -47,7 +50,6 @@ public class AccountController {
 
     @PostMapping("/register")
     public boolean register(@RequestBody Account account) {
-
         if (accountService.checkRegister(account.getUsername())) {
             account.setStatus(false);
             accountService.save(account);
@@ -58,10 +60,8 @@ public class AccountController {
             emailService.sendMail(to, subject, text);
             return true;
         }
-
         return false;
     }
-
     @GetMapping("/confirm/{id}")
     public void confirm(@PathVariable Long id) {
         Account account = accountService.findAccountById(id);
@@ -69,19 +69,16 @@ public class AccountController {
         accountService.save(account);
 
     }
-
     @GetMapping("/{id}")
     public Account findOne(@PathVariable Long id) {
         return accountService.findAccountById(id);
     }
-
     @PutMapping("/changePassword")
     public void changePassword(@RequestBody Account account) {
         Account account1 = accountService.findAccountById(account.getId());
         account1.setPassword(account.getPassword());
         accountService.save(account1);
     }
-
     @PutMapping("/update/{id}")
     public Account update( @PathVariable Long id,@RequestBody Account account) {
         Account account1 = accountService.findAccountById(id);
@@ -94,5 +91,4 @@ public class AccountController {
         }
         return null;
     }
-
 }
