@@ -1,6 +1,8 @@
 package com.example.demo.service.impl;
+import com.example.demo.Model.Cash;
 import com.example.demo.Model.Wallet;
 import com.example.demo.repository.WalletRepository;
+import com.example.demo.service.ICrudCash;
 import com.example.demo.service.ICrudWallet;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;
@@ -11,6 +13,8 @@ import java.util.List;
 public class WalletService implements ICrudWallet {
     @Autowired
     public WalletRepository walletRepository;
+    @Autowired
+    public ICrudCash cashService;
     @Override
     public Page<Wallet> findAll(Pageable pageable,Long userID) {
         return walletRepository.selectCash(pageable,userID);
@@ -31,7 +35,12 @@ public class WalletService implements ICrudWallet {
     }
     @Override
     public void delete(Long id) {
-    walletRepository.deleteById(id);
+        List<Cash> cashList= cashService.findCashByWallet(id);
+        for (Cash c:cashList) {
+            c.setWallet(null);
+            cashService.save(c);
+        }
+        walletRepository.deleteById(id);
     }
     @Override
     public Double sumMoney(Long id) {

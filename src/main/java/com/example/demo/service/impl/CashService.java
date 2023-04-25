@@ -43,6 +43,9 @@ public class CashService implements ICrudCash {
     public Page<Cash> findCashByIdWallet(Pageable pageable,Long userId, Long walletId, LocalDate startDate, LocalDate endDate) {
             return cashRepository.findCashByWalletId(pageable,userId,walletId,startDate,endDate);
     }
+    public List<Cash> findCashByWallet( Long walletId) {
+        return cashRepository.findCashByWallet(walletId);
+    }
     @Override
     public Page<Cash> findCash(Pageable pageable,Long userId, Long walletID) {
         return cashRepository.searchCash(pageable,userId,walletID);

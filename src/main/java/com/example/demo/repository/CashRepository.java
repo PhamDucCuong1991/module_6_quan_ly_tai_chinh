@@ -25,4 +25,6 @@ Page<Cash> findCashByUserId(Pageable pageable, @Param("userId") Long id);
                                   @Param("endDate")LocalDate endDate);
 @Query(value = "select c from Cash c where c.account.id=:userId and c.wallet.id=:walletId")
     Page<Cash> searchCash(Pageable pageable,@Param("userId")Long userId,@Param("walletId")Long walletId);
+    @Query(value = "select c from Cash  c where c.wallet.id=:walletId")
+    List<Cash> findCashByWallet(@Param("walletId")Long walletId);
 }

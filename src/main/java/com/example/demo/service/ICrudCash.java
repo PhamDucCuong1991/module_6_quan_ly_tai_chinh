@@ -13,4 +13,5 @@ public interface ICrudCash extends ICrud<Cash> {
     Page<Cash> findCashByDate(Pageable pageable,Long userId, LocalDate startDate, LocalDate endDate);
     Page<Cash> findCashByIdWallet(Pageable pageable,Long userId,Long walletId,LocalDate startDate,LocalDate endDate);
     Page<Cash> findCash(Pageable pageable,Long userId,Long walletID);
+    List<Cash> findCashByWallet( Long walletId);
 }
