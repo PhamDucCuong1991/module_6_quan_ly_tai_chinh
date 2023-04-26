@@ -22,6 +22,7 @@ public class Account implements UserDetails {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
     @NotNull
+
     private String username;
     @NotNull
     private String password;

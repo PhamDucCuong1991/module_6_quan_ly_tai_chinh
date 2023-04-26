@@ -15,4 +15,6 @@ public interface ICrudCategory extends ICrud<Category> {
     List<Category> findCategoryIncomeOnlyUserId(Long id);
     List<Category> findCategoryExpencesDefault();
     List<Category> findCategoryIncomeDefault();
+
+
 }

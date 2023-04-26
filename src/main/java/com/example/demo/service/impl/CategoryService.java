@@ -1,6 +1,8 @@
 package com.example.demo.service.impl;
+import com.example.demo.Model.Cash;
 import com.example.demo.Model.Category;
 import com.example.demo.repository.CategoryRepository;
+import com.example.demo.service.ICrudCash;
 import com.example.demo.service.ICrudCategory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -9,9 +11,11 @@ import java.util.List;
 public class CategoryService implements ICrudCategory {
     @Autowired
     public CategoryRepository categoryRepository;
+    @Autowired
+    public ICrudCash cashService;
     @Override
     public List<Category> findAll(Long userId) {
-        return categoryRepository.findCByIdCategory(userId);
+        return categoryRepository.findAllByAccount_Id(userId);
     }
     @Override
     public Category findOne(Long id) {
@@ -23,7 +27,11 @@ public class CategoryService implements ICrudCategory {
     }
     @Override
     public void delete(Long id) {
-
+        List<Cash> cashList= cashService.findCashByCategory(id);
+        for (Cash c:cashList) {
+            c.setCategory(null);
+            cashService.save(c);
+        }
     categoryRepository.deleteById(id);
     }
     @Override

@@ -43,8 +43,9 @@ dependencies {
     // https://mvnrepository.com/artifact/io.jsonwebtoken/jjwt-jackson
     runtimeOnly group: 'io.jsonwebtoken', name: 'jjwt-jackson', version: '0.11.2'
     // cấu hình email spring
+//    implementation group: 'org.springframework.boot', name: 'spring-boot-starter-mail', version: '1.2.0.RELEASE'
     implementation 'org.springframework.boot:spring-boot-starter-mail'
-    // login by facebook
+
     compileOnly "org.springframework.social:spring-social-facebook:2.0.3.RELEASE"
     compileOnly 'org.springframework.social:spring-social-web:1.1.6.RELEASE'
 }

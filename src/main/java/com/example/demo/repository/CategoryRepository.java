@@ -13,8 +13,7 @@ public interface CategoryRepository extends JpaRepository<Category,Long> {
     List<Category> findAllByExpense();
     @Query(value = "select c from Category c where c.typeCategory = 'income'")
     List<Category> findAllByIncome();
-    @Query(value = "select c from Category  c where c.account.id=:userId")
-    List<Category> findCByIdCategory(@Param("userId")Long userId);
+    List<Category> findAllByAccount_Id(Long userId);
     @Query(value = "select c from Category c where (c.account is null or c.account.id = :acc_id) and c.typeCategory = 'expense'")
     List<Category> selectCategoryExByUserId(@Param("acc_id") Long id);
     @Query(value = "select c from Category c where (c.account is null or c.account.id = :acc_id) and c.typeCategory = 'income'")
