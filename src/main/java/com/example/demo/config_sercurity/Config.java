@@ -1,5 +1,5 @@
 package com.example.demo.config_sercurity;
-import com.example.demo.service.account_service.AccountService;
+import com.example.demo.account.service.AccountService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;

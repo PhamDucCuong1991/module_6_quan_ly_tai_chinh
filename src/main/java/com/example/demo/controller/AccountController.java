@@ -2,7 +2,7 @@ package com.example.demo.controller;
 
 import com.example.demo.account.Account;
 import com.example.demo.account.AccountToken;
-import com.example.demo.service.account_service.AccountService;
+import com.example.demo.account.service.AccountService;
 import com.example.demo.service.account_service.JwtService;
 import com.example.demo.service.email_service.EmailService;
 import org.springframework.beans.factory.annotation.Autowired;

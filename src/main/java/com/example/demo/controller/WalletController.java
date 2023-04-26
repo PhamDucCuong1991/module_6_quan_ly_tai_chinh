@@ -1,9 +1,13 @@
 package com.example.demo.controller;
 import com.example.demo.Model.Wallet;
 import com.example.demo.account.Account;
-import com.example.demo.service.account_service.AccountService;
-import com.example.demo.service.account_service.impl.WalletService;
+import com.example.demo.account.service.AccountService;
+import com.example.demo.service.ICrudWallet;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.PageRequest;
+import org.springframework.data.domain.Pageable;
+import org.springframework.data.web.PageableDefault;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
@@ -12,15 +16,24 @@ import java.util.Optional;
 @RestController
 @CrossOrigin("*")
 @RequestMapping("user{userId}/wallets")
-public class WalletController {
+public class  WalletController {
     @Autowired
-    public WalletService walletService;
+    public ICrudWallet walletService;
     @Autowired
     public AccountService  accountService;
     @GetMapping()
-    public ResponseEntity<List<Wallet>> findAll(@PathVariable Optional<Long> userId){
+    public ResponseEntity<Page<Wallet>> findAll(Pageable pageable,@PathVariable Optional<Long> userId){
         if (userId.isPresent()){
-            return new ResponseEntity<>(walletService.findAll(userId), HttpStatus.OK);
+            return new ResponseEntity<>(walletService.findAll(pageable,userId.get()), HttpStatus.OK);
+        }else {
+            return new ResponseEntity<>(HttpStatus.BAD_REQUEST);
+        }
+    }
+    @GetMapping("/page{index}")
+    public ResponseEntity<Page<Wallet>> findAll(@PathVariable int index, @PathVariable Optional<Long> userId){
+        if (userId.isPresent()){
+            Pageable pageable= PageRequest.of(index,5);
+            return new ResponseEntity<>(walletService.findAllPage(pageable,userId.get()), HttpStatus.OK);
         }else {
             return new ResponseEntity<>(HttpStatus.BAD_REQUEST);
         }
@@ -32,7 +45,7 @@ public class WalletController {
     @GetMapping("/total")
     private ResponseEntity<Double> sumMoney(@PathVariable Optional<Long> userId){
         if (userId.isPresent()){
-            return new ResponseEntity<>(walletService.sumMoney(userId),HttpStatus.OK);
+            return new ResponseEntity<>(walletService.sumMoney(userId.get()),HttpStatus.OK);
         }else {
             return new ResponseEntity<>(HttpStatus.BAD_REQUEST);
         }
