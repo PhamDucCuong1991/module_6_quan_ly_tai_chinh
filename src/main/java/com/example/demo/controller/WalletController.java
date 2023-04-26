@@ -1,16 +1,18 @@
 package com.example.demo.controller;
+import com.example.demo.Model.Cash;
 import com.example.demo.Model.Wallet;
 import com.example.demo.account.Account;
 import com.example.demo.account.service.AccountService;
 import com.example.demo.service.ICrudWallet;
+import com.example.demo.service.impl.CashService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.PageRequest;
 import org.springframework.data.domain.Pageable;
-import org.springframework.data.web.PageableDefault;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
+
 import java.util.List;
 import java.util.Optional;
 @RestController
@@ -21,6 +23,8 @@ public class  WalletController {
     public ICrudWallet walletService;
     @Autowired
     public AccountService  accountService;
+    @Autowired
+    public CashService cashService;
     @GetMapping()
     public ResponseEntity<Page<Wallet>> findAll(Pageable pageable,@PathVariable Optional<Long> userId){
         if (userId.isPresent()){
@@ -75,6 +79,10 @@ public class  WalletController {
     @DeleteMapping("/{id}")
     private ResponseEntity<Void> delete(@PathVariable Long userId,@PathVariable Long id){
         walletService.delete(id);
+        List<Cash> cashList=cashService.findCashByWalletId(userId,id);
+        for (Cash c:cashList) {
+            c.getWallet().setName("Khác");
+        }
         return new ResponseEntity<>(HttpStatus.OK);
     }
 }

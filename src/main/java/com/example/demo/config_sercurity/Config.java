@@ -32,12 +32,13 @@ public class Config extends WebSecurityConfigurerAdapter {
         http.csrf().ignoringAntMatchers("/**");
         http.authorizeRequests()
 
-                .antMatchers(HttpMethod.DELETE).hasRole("USER")
+                .antMatchers(HttpMethod.DELETE).
+                hasRole("USER")
                 .antMatchers(HttpMethod.GET).permitAll()
                 .antMatchers(HttpMethod.POST).permitAll()
                 .antMatchers(HttpMethod.PUT).hasRole("USER")
                 .antMatchers( "/user/**").permitAll()
-//                .antMatchers( "/**").permitAll()
+                .antMatchers( "/**").permitAll()
                 .anyRequest().authenticated()
                 .and().csrf().disable();
         http.addFilterBefore(jwtAuthenticationFilter, UsernamePasswordAuthenticationFilter.class)

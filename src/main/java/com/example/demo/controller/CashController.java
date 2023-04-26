@@ -1,5 +1,6 @@
 package com.example.demo.controller;
 import com.example.demo.Model.Cash;
+import com.example.demo.Model.Wallet;
 import com.example.demo.account.Account;
 import com.example.demo.account.service.AccountService;
 import com.example.demo.service.ICrudCash;
@@ -28,7 +29,7 @@ public class CashController {
     @GetMapping()
     public ResponseEntity<Page<Cash>> findCashByID(@PageableDefault(value = 5) Pageable pageable, @PathVariable Optional<Long> userId){
         if (userId.isPresent()){
-            return new ResponseEntity<>(cashService.findCashByIdUser(pageable,userId.get()), HttpStatus.OK);
+            return new ResponseEntity<>(cashService.findCashByIdUser(pageable      ,userId.get()), HttpStatus.OK);
         }else {
             return new ResponseEntity<>(HttpStatus.BAD_REQUEST);
         }
@@ -49,11 +50,20 @@ public class CashController {
     }
     @PostMapping()
     private ResponseEntity<Void> create(@PathVariable Optional<Long> userId,@RequestBody Cash cash){
+        Wallet wallet=walletService.findWalletByUserId(userId.get(),cash.getWallet().getId());
         if (userId.isPresent()){
             Account account=accountService.findAccountById(userId.get());
-            cash.setAccount(account);
-            cashService.save(cash);
-            return new ResponseEntity<>(HttpStatus.CREATED);
+            if (cash.getType().equals("income")){
+                wallet.setTotalMoney(wallet.getTotalMoney()-cash.getMoney());
+                cash.setAccount(account);
+                cashService.save(cash);
+                return new ResponseEntity<>(HttpStatus.CREATED);
+            }else if (cash.getType().equals("expence")){
+                wallet.setTotalMoney(wallet.getTotalMoney()+cash.getMoney());
+                cash.setAccount(account);
+                cashService.save(cash);
+                return new ResponseEntity<>(HttpStatus.CREATED);
+            }
         }
       return new ResponseEntity<>(HttpStatus.BAD_REQUEST);
     }
@@ -88,4 +98,47 @@ public class CashController {
         }
    return new ResponseEntity<>(HttpStatus.BAD_REQUEST);
     }
+    @GetMapping("/dayNow")
+    private ResponseEntity<List<Cash>> findCashByDayNow(@PathVariable Optional<Long> userId){
+        if (userId.isPresent()){
+            LocalDate dayNow=LocalDate.now();
+            return new ResponseEntity<>(cashService.findCashByDayNow(userId.get(),dayNow),HttpStatus.OK);
+        }
+        return new ResponseEntity<>(HttpStatus.BAD_REQUEST);
+    }
+    @GetMapping("/wallet{walletId}/daynow")
+    private ResponseEntity<List<Cash>> findCashByWalletIdDayNow(@PathVariable Optional<Long> userId,@PathVariable Optional<Long> walletId){
+        if (userId.isPresent()&&walletId.isPresent()){
+            LocalDate dayNow=LocalDate.now();
+            return new ResponseEntity<>(cashService.findCashByWalletIdDayNow(userId.get(),walletId.get(),dayNow),HttpStatus.OK);
+        }
+        return new ResponseEntity<>(HttpStatus.BAD_REQUEST);
+    }
+    @GetMapping("/totalIncome")
+    private ResponseEntity<Double> sumCashByIncome(@PathVariable Optional<Long> userId){
+        if (userId.isPresent()){
+            LocalDate dayNow=LocalDate.now();
+            return new ResponseEntity<>(cashService.sumMoneyIncomeDayNow(userId.get(),dayNow),HttpStatus.OK);
+        }
+        return new ResponseEntity<>(HttpStatus.BAD_REQUEST);
+    }
+    @GetMapping("/totalExpence")
+    private ResponseEntity<Double> sumCashByExpence(@PathVariable Optional<Long> userId){
+        if (userId.isPresent()){
+            LocalDate dayNow=LocalDate.now();
+            return new ResponseEntity<>(cashService.sumMoneyExpenceDayNow(userId.get(),dayNow),HttpStatus.OK);
+        }
+        return new ResponseEntity<>(HttpStatus.BAD_REQUEST);
+    }
+    @GetMapping("/totalMoneyDayNow")
+    private ResponseEntity<Double> sumMoneyCashDayNow(@PathVariable Optional<Long> userId){
+        if (userId.isPresent()){
+            LocalDate dayNow=LocalDate.now();
+            Double totalMoney=cashService.sumMoneyIncomeDayNow(userId.get(),dayNow)-cashService.sumMoneyExpenceDayNow(userId.get(),dayNow);
+            return new ResponseEntity<>(totalMoney,HttpStatus.OK);
+        }
+        return new ResponseEntity<>(HttpStatus.BAD_REQUEST);
+    }
+
+
 }
