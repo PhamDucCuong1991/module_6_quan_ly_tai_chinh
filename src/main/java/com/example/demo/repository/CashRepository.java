@@ -16,7 +16,7 @@ import java.time.LocalDate;
 @Repository
 public interface CashRepository extends JpaRepository<Cash,Long> {
 @Query(value = "select c from Cash c where c.account.id=:userId")
-Page<Cash> findCashByUserId(Pageable pageable, @Param("userId") Long id);
+    Page<Cash> findCashByUserId(Pageable pageable, @Param("userId") Long id);
 @Query(value = "select c from Cash c where c.account.id=:userId and c.date>=:startDate and c.date<=:endDate")
     Page<Cash> findCashByDateStart(Pageable pageable,@Param("userId")Long id, @Param("startDate")LocalDate starDate,@Param("endDate")LocalDate endDate);
 
@@ -25,4 +25,8 @@ Page<Cash> findCashByUserId(Pageable pageable, @Param("userId") Long id);
                                   @Param("endDate")LocalDate endDate);
 @Query(value = "select c from Cash c where c.account.id=:userId and c.wallet.id=:walletId")
     Page<Cash> searchCash(Pageable pageable,@Param("userId")Long userId,@Param("walletId")Long walletId);
+
+//@Query(value = "select sum(c.money) from Cash c where c.account.id=:userId")
+//    Double
+
 }
