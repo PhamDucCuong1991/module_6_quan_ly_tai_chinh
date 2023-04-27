@@ -1,5 +1,7 @@
 package com.example.demo.controller;
 import com.example.demo.Model.Cash;
+import com.example.demo.Model.CashCategoryResult;
+import com.example.demo.Model.Category;
 import com.example.demo.account.Account;
 import com.example.demo.account.service.AccountService;
 import com.example.demo.service.ICrudCash;
@@ -26,13 +28,42 @@ public class CashController {
     @Autowired
     public ICrudWallet walletService;
     @GetMapping()
-    public ResponseEntity<Page<Cash>> findCashByID(@PageableDefault(value = 5) Pageable pageable, @PathVariable Optional<Long> userId){
+    public ResponseEntity<Page<Cash>> findCashByID(@PageableDefault(value = 10000) Pageable pageable, @PathVariable Optional<Long> userId){
         if (userId.isPresent()){
             return new ResponseEntity<>(cashService.findCashByIdUser(pageable,userId.get()), HttpStatus.OK);
         }else {
             return new ResponseEntity<>(HttpStatus.BAD_REQUEST);
         }
     }
+
+    @GetMapping("/ex")
+    private ResponseEntity<List<Cash>> findCategoryEx(@PathVariable Optional<Long> userId){
+        if (userId.isPresent()){
+            return new ResponseEntity<>(cashService.findCashExpences(userId.get()),HttpStatus.OK);
+        }
+        return new ResponseEntity<>(HttpStatus.BAD_REQUEST);
+    }
+
+    @GetMapping("/ex/category/{start}/{end}")
+    private ResponseEntity<List<CashCategoryResult>> findAllByCategory(@PathVariable Optional<Long> userId,@PathVariable String start, @PathVariable String end){
+        if (userId.isPresent()){
+            LocalDate startDate=LocalDate.parse(start);
+            LocalDate endDate=LocalDate.parse(end);
+            return new ResponseEntity<>(cashService.findAllByCategory(userId.get(),startDate,endDate),HttpStatus.OK);
+        }
+        return new ResponseEntity<>(HttpStatus.BAD_REQUEST);
+    }
+
+    @GetMapping("/ex/{start}/{end}")
+    private ResponseEntity<Double> totalMoneyExpenseByTime(@PathVariable Optional<Long> userId,@PathVariable String start, @PathVariable String end){
+        if (userId.isPresent()){
+            LocalDate startDate=LocalDate.parse(start);
+            LocalDate endDate=LocalDate.parse(end);
+            return new ResponseEntity<>(cashService.totalMoneyExpenseByTime(userId.get(),startDate,endDate),HttpStatus.OK);
+        }
+        return new ResponseEntity<>(HttpStatus.BAD_REQUEST);
+    }
+
     @GetMapping("/{start}/{end}")
     private ResponseEntity<Page<Cash>> findCashByDate(@PageableDefault(value = 5) Pageable pageable,@PathVariable Optional<Long> userId,
     @PathVariable String start, @PathVariable String end){
@@ -75,6 +106,7 @@ public class CashController {
         cashService.delete(id);
         return new ResponseEntity<>(HttpStatus.ACCEPTED);
     }
+
     @GetMapping("/{walletId}/page{index}")
     private ResponseEntity<Page<Cash>> findCashByWalletId(@PathVariable int index,@PathVariable Optional<Long> userId,@PathVariable Optional<Long> walletId,
                                                           @RequestParam Optional<String> start,@RequestParam Optional<String> end ){

@@ -1,5 +1,7 @@
 package com.example.demo.service.impl;
 import com.example.demo.Model.Cash;
+import com.example.demo.Model.CashCategoryResult;
+import com.example.demo.Model.Category;
 import com.example.demo.repository.CashRepository;
 import com.example.demo.service.ICrudCash;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -36,12 +38,30 @@ public class CashService implements ICrudCash {
     }
 
     @Override
+    public List<Cash> findCashExpences(Long id) {
+        return cashRepository.findAllByExpense(id);
+    }
+
+    @Override
+    public List<CashCategoryResult> findAllByCategory(Long userId, LocalDate startDate, LocalDate endDate) {
+        return cashRepository.findAllByCategory(userId,startDate,endDate);
+    }
+
+    @Override
+    public Double totalMoneyExpenseByTime(Long userId, LocalDate startDate, LocalDate endDate) {
+        return cashRepository.totalMoneyExpenseByTime(userId,startDate,endDate);
+    }
+
+    @Override
     public Page<Cash> findCashByDate(Pageable pageable,Long userId, LocalDate startDate, LocalDate endDate) {
         return cashRepository.findCashByDateStart(pageable,userId,startDate,endDate);
     }
     @Override
     public Page<Cash> findCashByIdWallet(Pageable pageable,Long userId, Long walletId, LocalDate startDate, LocalDate endDate) {
             return cashRepository.findCashByWalletId(pageable,userId,walletId,startDate,endDate);
+    }
+    public List<Cash> findCashByWallet( Long walletId) {
+        return cashRepository.findCashByWallet(walletId);
     }
     @Override
     public Page<Cash> findCash(Pageable pageable,Long userId, Long walletID) {

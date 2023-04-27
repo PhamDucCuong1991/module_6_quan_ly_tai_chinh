@@ -24,4 +24,6 @@ public class Category {
     private String icon;
     @ManyToOne
     private Account account;
+
+
 }

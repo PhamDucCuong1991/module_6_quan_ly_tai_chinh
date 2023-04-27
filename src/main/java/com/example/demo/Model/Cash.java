@@ -29,4 +29,6 @@ public class Cash {
     private Account account;
     @ManyToOne
     private Wallet wallet;
+
+
 }

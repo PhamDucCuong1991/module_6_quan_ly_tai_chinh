@@ -18,13 +18,13 @@ public class Wallet {
     private Long id;
     private String name;
     @NotNull
-    @Positive
+
     private Double totalMoney;
     @NotNull
     private String icon;
     private String backgroundColor;
-    @Positive
+
     private Double limitMoney;
-    @OneToOne
+    @ManyToOne
     private Account account;
 }
