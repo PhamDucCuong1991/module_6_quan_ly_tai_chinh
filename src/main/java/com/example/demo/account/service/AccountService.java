@@ -55,7 +55,7 @@ public class AccountService implements UserDetailsService, ICrudAccount {
 
     @Override
     public Account findOne(Long id) {
-        return null;
+        return accountRepository.findAccountById(id);
     }
 
     public List<Account> findAllByStatus(){

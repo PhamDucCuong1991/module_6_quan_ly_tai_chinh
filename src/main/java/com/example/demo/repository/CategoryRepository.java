@@ -26,4 +26,5 @@ public interface CategoryRepository extends JpaRepository<Category,Long> {
     List<Category> selectCategoryExByOnlyUserId(@Param("acc_id") Long id);
     @Query(value = "select c from Category c where (c.account.id = :acc_id) and c.typeCategory = 'income'")
     List<Category> selectCategoryInByOnlyUserId(@Param("acc_id") Long id);
+
 }

@@ -53,7 +53,9 @@ public class CategoryController {
         Account account=accountService.findOne(userId);
         if (category1!=null){
             category1.setAccount(account);
-            categoryService.save(category);
+            category1.setName(category.getName());
+            category1.setTypeCategory(category.getTypeCategory());
+            categoryService.save(category1);
             return new ResponseEntity<>(HttpStatus.ACCEPTED);
         }
         return new ResponseEntity<>(HttpStatus.BAD_REQUEST);
@@ -62,8 +64,11 @@ public class CategoryController {
 
     @DeleteMapping("/{id}")
     private ResponseEntity<Void> delete(@PathVariable Long id){
-        categoryService.delete(id);
-        return new ResponseEntity<>(HttpStatus.OK);
+        if(id>8) {
+            categoryService.delete(id);
+            return new ResponseEntity<>(HttpStatus.OK);
+        }
+     return new ResponseEntity<>(HttpStatus.EXPECTATION_FAILED);
     }
     @GetMapping("/ex")
     private ResponseEntity<List<Category>> findCategoryEx(@PathVariable Optional<Long> userId){
