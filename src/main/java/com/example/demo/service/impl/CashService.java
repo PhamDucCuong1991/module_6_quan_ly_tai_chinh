@@ -30,11 +30,11 @@ public class CashService implements ICrudCash {
     }
     @Override
     public void delete(Long id) {
-    cashRepository.deleteById(id);
+        cashRepository.deleteById(id);
     }
     @Override
     public Page<Cash> findCashByIdUser(Pageable pageable, Long userId) {
-        return cashRepository.findCashByUserId(pageable,userId);
+        return cashRepository.findCashByUserId(pageable, userId);
     }
 
     @Override
@@ -53,18 +53,49 @@ public class CashService implements ICrudCash {
     }
 
     @Override
-    public Page<Cash> findCashByDate(Pageable pageable,Long userId, LocalDate startDate, LocalDate endDate) {
-        return cashRepository.findCashByDateStart(pageable,userId,startDate,endDate);
-    }
-    @Override
-    public Page<Cash> findCashByIdWallet(Pageable pageable,Long userId, Long walletId, LocalDate startDate, LocalDate endDate) {
-            return cashRepository.findCashByWalletId(pageable,userId,walletId,startDate,endDate);
+    public Page<Cash> findCashByDate(Pageable pageable, Long userId, LocalDate startDate, LocalDate endDate) {
+        return cashRepository.findCashByDateStart(pageable, userId, startDate, endDate);
     }
     public List<Cash> findCashByWallet( Long walletId) {
         return cashRepository.findCashByWallet(walletId);
     }
+
+
+
     @Override
-    public Page<Cash> findCash(Pageable pageable,Long userId, Long walletID) {
-        return cashRepository.searchCash(pageable,userId,walletID);
+    public Page<Cash> findCashByIdWallet(Pageable pageable, Long userId, Long walletId, LocalDate startDate, LocalDate endDate) {
+        return cashRepository.findCashByWalletId(pageable, userId, walletId, startDate, endDate);
+    }
+
+    @Override
+    public Page<Cash> findCash(Pageable pageable, Long userId, Long walletID) {
+        return cashRepository.searchCash(pageable, userId, walletID);
+    }
+
+    @Override
+    public List<Cash> findCashByWalletId(Long userId, Long walletId) {
+        return cashRepository.findAllCashByWalletId(userId, walletId);
+    }
+
+    @Override
+    public List<Cash> findCashByDayNow(Long userId, LocalDate dayNow) {
+        return cashRepository.searchCashByDayNow(userId, dayNow);
+    }
+
+    @Override
+    public List<Cash> findCashByWalletIdDayNow(Long userId, Long walletId, LocalDate dayNow) {
+        return cashRepository.searchCashByWalletIdAndDayNow(userId, walletId, dayNow);
+    }
+
+    @Override
+    public Double sumMoneyIncomeDayNow(Long userId, LocalDate dayNow) {
+        return cashRepository.moneyIncome(userId,dayNow);
+    }
+
+    @Override
+    public Double sumMoneyExpenceDayNow(Long userId, LocalDate dayNow) {
+        return cashRepository.moneyExpence(userId,dayNow);
     }
 }
+
+

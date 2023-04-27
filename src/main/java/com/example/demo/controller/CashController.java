@@ -120,4 +120,47 @@ public class CashController {
         }
    return new ResponseEntity<>(HttpStatus.BAD_REQUEST);
     }
+    @GetMapping("/dayNow")
+    private ResponseEntity<List<Cash>> findCashByDayNow(@PathVariable Optional<Long> userId){
+        if (userId.isPresent()){
+            LocalDate dayNow=LocalDate.now();
+            return new ResponseEntity<>(cashService.findCashByDayNow(userId.get(),dayNow),HttpStatus.OK);
+        }
+        return new ResponseEntity<>(HttpStatus.BAD_REQUEST);
+    }
+    @GetMapping("/wallet{walletId}/daynow")
+    private ResponseEntity<List<Cash>> findCashByWalletIdDayNow(@PathVariable Optional<Long> userId,@PathVariable Optional<Long> walletId){
+        if (userId.isPresent()&&walletId.isPresent()){
+            LocalDate dayNow=LocalDate.now();
+            return new ResponseEntity<>(cashService.findCashByWalletIdDayNow(userId.get(),walletId.get(),dayNow),HttpStatus.OK);
+        }
+        return new ResponseEntity<>(HttpStatus.BAD_REQUEST);
+    }
+    @GetMapping("/totalIncome")
+    private ResponseEntity<Double> sumCashByIncome(@PathVariable Optional<Long> userId){
+        if (userId.isPresent()){
+            LocalDate dayNow=LocalDate.now();
+            return new ResponseEntity<>(cashService.sumMoneyIncomeDayNow(userId.get(),dayNow),HttpStatus.OK);
+        }
+        return new ResponseEntity<>(HttpStatus.BAD_REQUEST);
+    }
+    @GetMapping("/totalExpence")
+    private ResponseEntity<Double> sumCashByExpence(@PathVariable Optional<Long> userId){
+        if (userId.isPresent()){
+            LocalDate dayNow=LocalDate.now();
+            return new ResponseEntity<>(cashService.sumMoneyExpenceDayNow(userId.get(),dayNow),HttpStatus.OK);
+        }
+        return new ResponseEntity<>(HttpStatus.BAD_REQUEST);
+    }
+    @GetMapping("/totalMoneyDayNow")
+    private ResponseEntity<Double> sumMoneyCashDayNow(@PathVariable Optional<Long> userId){
+        if (userId.isPresent()){
+            LocalDate dayNow=LocalDate.now();
+            Double totalMoney=cashService.sumMoneyIncomeDayNow(userId.get(),dayNow)-cashService.sumMoneyExpenceDayNow(userId.get(),dayNow);
+            return new ResponseEntity<>(totalMoney,HttpStatus.OK);
+        }
+        return new ResponseEntity<>(HttpStatus.BAD_REQUEST);
+    }
+
+
 }
