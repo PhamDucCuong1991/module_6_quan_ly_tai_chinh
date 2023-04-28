@@ -65,8 +65,7 @@ public class CashController {
     }
 
     @GetMapping("/{start}/{end}")
-    private ResponseEntity<Page<Cash>> findCashByDate(@PageableDefault(value = 5) Pageable pageable,@PathVariable Optional<Long> userId,
-    @PathVariable String start, @PathVariable String end){
+    private ResponseEntity<Page<Cash>> findCashByDate(@PageableDefault(value = 5) Pageable pageable,@PathVariable Optional<Long> userId, @PathVariable String start, @PathVariable String end){
         if (userId.isPresent()){
             LocalDate startDate=LocalDate.parse(start);
             LocalDate endDate=LocalDate.parse(end);
