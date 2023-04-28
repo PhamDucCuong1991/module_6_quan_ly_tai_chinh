@@ -14,6 +14,10 @@ public interface WalletRepository extends JpaRepository<Wallet,Long> {
     Page<Wallet> selectCash(Pageable pageable, @Param("userId") Long userId);
     @Query(value = "select sum(w.totalMoney) from Wallet w where w.account.id=:userId")
     Double sumMoneyByUserId(@Param("userId")Long userId);
+    @Query(value = "select sum(w.totalMoney) from Wallet w where w.account.id=:userId and w.icon='fa-sack-dollar'")
+    Double sumMoneyByCashMoney(@Param("userId")Long userId);
+    @Query(value = "select sum(w.totalMoney) from Wallet w where w.account.id=:userId and w.icon='fa-credit-card'")
+    Double sumMoneyByBankMoney(@Param("userId")Long userId);
     @Query(value = "select w from Wallet w where w.account.id=:userId and w.id=:walletId")
     Wallet findWalletByIdAccount(@Param("userId")Long userId, @Param("walletId")Long walletId);
 }

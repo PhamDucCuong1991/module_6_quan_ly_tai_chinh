@@ -48,6 +48,10 @@ public class CashService implements ICrudCash {
     }
 
     @Override
+    public  List<Object> getSumByTypeAndDate(LocalDate startDate,LocalDate endDate,Long userId){
+        return cashRepository.getSumByTypeAndDate(startDate, endDate,userId);
+    }
+    @Override
     public Double totalMoneyExpenseByTime(Long userId, LocalDate startDate, LocalDate endDate) {
         return cashRepository.totalMoneyExpenseByTime(userId,startDate,endDate);
     }

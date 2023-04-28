@@ -46,6 +46,16 @@ public class WalletService implements ICrudWallet {
     public Double sumMoney(Long id) {
         return walletRepository.sumMoneyByUserId(id);
     }
+
+    @Override
+    public Double sumMoneyByCashMoney(Long id) {
+        return walletRepository.sumMoneyByCashMoney(id);
+    }
+
+    @Override
+    public Double sumMoneyByBankMoney(Long id) {
+        return walletRepository.sumMoneyByBankMoney(id);
+    }
     @Override
     public Wallet findWalletByUserId(Long userId, Long walletId) {
         return walletRepository.findWalletByIdAccount(userId,walletId);
@@ -55,4 +65,6 @@ public class WalletService implements ICrudWallet {
     public Page<Wallet> findAllPage(Pageable pageable,Long userId) {
         return walletRepository.selectCash(pageable,userId);
     }
+
+
 }

@@ -13,6 +13,7 @@ import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
+import java.time.LocalDate;
 import java.util.List;
 import java.util.Optional;
 @RestController
@@ -53,6 +54,20 @@ public class  WalletController {
         }else {
             return new ResponseEntity<>(HttpStatus.BAD_REQUEST);
         }
+    }
+    @GetMapping("/totalMoneyCash")
+    private ResponseEntity<Double> sumMoneyByCashMoney(@PathVariable Optional<Long> userId){
+        if (userId.isPresent()){
+            return new ResponseEntity<>(walletService.sumMoneyByCashMoney(userId.get()),HttpStatus.OK);
+        }
+        return new ResponseEntity<>(HttpStatus.BAD_REQUEST);
+    }
+    @GetMapping("/totalMoneyBank")
+    private ResponseEntity<Double> sumMoneyByBankMoney(@PathVariable Optional<Long> userId){
+        if (userId.isPresent()){
+            return new ResponseEntity<>(walletService.sumMoneyByBankMoney(userId.get()),HttpStatus.OK);
+        }
+        return new ResponseEntity<>(HttpStatus.BAD_REQUEST);
     }
     @PostMapping()
     private  ResponseEntity<Void> create(@PathVariable Optional<Long> userId,@RequestBody Wallet wallet){

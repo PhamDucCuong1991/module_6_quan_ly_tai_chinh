@@ -144,6 +144,7 @@ public class CashController {
         }
         return new ResponseEntity<>(HttpStatus.BAD_REQUEST);
     }
+
     @GetMapping("/totalExpence")
     private ResponseEntity<Double> sumCashByExpence(@PathVariable Optional<Long> userId){
         if (userId.isPresent()){
@@ -162,5 +163,12 @@ public class CashController {
         return new ResponseEntity<>(HttpStatus.BAD_REQUEST);
     }
 
+
+    @GetMapping("/cashSumByType/{startDateString}/{endDateString}")
+    private ResponseEntity<List<Object>> getSumByTypeAndDate(@PathVariable String startDateString,@PathVariable String endDateString,@PathVariable Long userId){
+        LocalDate startDate = LocalDate.parse(startDateString);
+        LocalDate endDate = LocalDate.parse(endDateString);
+        return new ResponseEntity<>(cashService.getSumByTypeAndDate(startDate,endDate,userId),HttpStatus.OK);
+    }
 
 }

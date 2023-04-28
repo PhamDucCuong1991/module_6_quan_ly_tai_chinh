@@ -10,6 +10,8 @@ public interface ICrudWallet extends ICrud<Wallet>{
     void save(Wallet wallet);
     void delete(Long id);
     Double sumMoney(Long id);
+    Double sumMoneyByCashMoney(Long id);
+    Double sumMoneyByBankMoney(Long id);
     Wallet findWalletByUserId(Long userId,Long walletId);
     Page<Wallet> findAllPage(Pageable pageable,Long userId);
 }
