@@ -14,6 +14,7 @@ public interface ICrudCash extends ICrud<Cash> {
     List<CashCategoryResult> findAllByCategory(Long userId, LocalDate startDate, LocalDate endDate);
     Double totalMoneyExpenseByTime(Long userId, LocalDate startDate, LocalDate endDate);
     Page<Cash> findCashByIdUser(Pageable pageable, Long userId);
+    List<Cash> findCashByCategory(Long categoryId);
     Page<Cash> findCashByDate(Pageable pageable,Long userId, LocalDate startDate, LocalDate endDate);
     Page<Cash> findCashByIdWallet(Pageable pageable,Long userId,Long walletId,LocalDate startDate,LocalDate endDate);
     Page<Cash> findCash(Pageable pageable,Long userId,Long walletID);

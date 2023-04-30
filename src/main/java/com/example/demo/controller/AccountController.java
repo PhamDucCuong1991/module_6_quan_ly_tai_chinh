@@ -87,4 +87,18 @@ public class AccountController {
         }
         return null;
     }
+
+
+    @GetMapping("/back-password/{email}")
+    public boolean backPassword(@PathVariable String email){
+        Account account = accountService.findAccountByUserName(email);
+        if (account!=null){
+            String to = email;
+            String subject = "Back password success!";
+            String text = "Your password: " + account.getPassword();
+            emailService.sendMail(to,subject,text);
+            return true;
+        }
+        return false;
+    }
 }

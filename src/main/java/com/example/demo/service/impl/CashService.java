@@ -38,6 +38,11 @@ public class CashService implements ICrudCash {
     }
 
     @Override
+    public List<Cash> findCashByCategory(Long categoryId) {
+        return cashRepository.findCashByCategory_Id(categoryId);
+    }
+
+    @Override
     public List<Cash> findCashExpences(Long id) {
         return cashRepository.findAllByExpense(id);
     }

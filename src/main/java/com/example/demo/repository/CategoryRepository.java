@@ -1,4 +1,5 @@
 package com.example.demo.repository;
+import com.example.demo.Model.Cash;
 import com.example.demo.Model.Category;
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.data.repository.query.Param;
@@ -26,5 +27,6 @@ public interface CategoryRepository extends JpaRepository<Category,Long> {
     List<Category> selectCategoryExByOnlyUserId(@Param("acc_id") Long id);
     @Query(value = "select c from Category c where (c.account.id = :acc_id) and c.typeCategory = 'income'")
     List<Category> selectCategoryInByOnlyUserId(@Param("acc_id") Long id);
+
 
 }

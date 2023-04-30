@@ -56,4 +56,6 @@ Double totalMoneyExpenseByTime(@Param("userId") Long id,@Param("startDate")Local
 
 @Query(value = "select c.date,c.type,sum(c.money) as totalMoney from Cash c where c.account.id=:userId and c.date >=:startDate and c.date<=:endDate group by c.type,c.date")
 List<Object> getSumByTypeAndDate(LocalDate startDate,LocalDate endDate,Long userId);
+    @Query(value = "select c from Cash  c where c.category.id=:categoryId")
+    List<Cash> findCashByCategory_Id(@Param("categoryId")Long categoryId);
 }
