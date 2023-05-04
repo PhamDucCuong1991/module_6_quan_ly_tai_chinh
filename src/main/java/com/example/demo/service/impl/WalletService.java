@@ -37,8 +37,7 @@ public class WalletService implements ICrudWallet {
     public void delete(Long id) {
         List<Cash> cashList= cashService.findCashByWallet(id);
         for (Cash c:cashList) {
-            c.setWallet(null);
-            cashService.save(c);
+            cashService.delete(c.getId());
         }
         walletRepository.deleteById(id);
     }
