@@ -26,4 +26,8 @@ public interface ICrudCash extends ICrud<Cash> {
     Double sumMoneyExpenceDayNow(Long userId,LocalDate dayNow);
     List<Object> getSumByTypeAndDate(LocalDate startDate,LocalDate endDate,Long userId);
 
+    List<Object> getDifferenceIncomeExpenseByMonth(Long userId,int year);
+    List<Object> getSumByWalletAndDate(Long userId,LocalDate date);
+    List<CashCategoryResult> findAllIncomeByCategory(Long userId, LocalDate startDate, LocalDate endDate);
+
 }

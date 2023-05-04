@@ -1,6 +1,8 @@
 package com.example.demo.repository;
 import com.example.demo.Model.Cash;
 import com.example.demo.Model.Category;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.Pageable;
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.data.repository.query.Param;
 import org.springframework.stereotype.Repository;
@@ -14,7 +16,8 @@ public interface CategoryRepository extends JpaRepository<Category,Long> {
     List<Category> findAllByExpense();
     @Query(value = "select c from Category c where c.typeCategory = 'income'")
     List<Category> findAllByIncome();
-    List<Category> findAllByAccount_Id(Long userId);
+    @Query(value = "select c from Category c where (c.account.id=:userId or (c.account.id is null)) order by c.account.id nulls last ")
+    Page<Category> findAllByAccount_Id(Pageable pageable,@Param("userId") Long id);
     @Query(value = "select c from Category c where (c.account is null or c.account.id = :acc_id) and c.typeCategory = 'expense'")
     List<Category> selectCategoryExByUserId(@Param("acc_id") Long id);
     @Query(value = "select c from Category c where (c.account is null or c.account.id = :acc_id) and c.typeCategory = 'income'")

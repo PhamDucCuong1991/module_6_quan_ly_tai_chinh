@@ -161,8 +161,6 @@ public class CashController {
         }
         return new ResponseEntity<>(HttpStatus.BAD_REQUEST);
     }
-
-
     @GetMapping("/cashSumByType/{startDateString}/{endDateString}")
     private ResponseEntity<List<Object>> getSumByTypeAndDate(@PathVariable String startDateString,@PathVariable String endDateString,@PathVariable Long userId){
         LocalDate startDate = LocalDate.parse(startDateString);
@@ -170,4 +168,28 @@ public class CashController {
         return new ResponseEntity<>(cashService.getSumByTypeAndDate(startDate,endDate,userId),HttpStatus.OK);
     }
 
+    @GetMapping("/moneyByWallet/{dateString}")
+    private ResponseEntity<List<Object>> getSumByWalletAndDate(@PathVariable Optional<Long> userId, @PathVariable String dateString){
+        if (userId.isPresent()){
+            LocalDate date=LocalDate.parse(dateString);
+            return new ResponseEntity<>(cashService.getSumByWalletAndDate(userId.get(),date),HttpStatus.OK);
+        }
+        return new ResponseEntity<>(HttpStatus.BAD_REQUEST);
+    }
+    @GetMapping("/in/category/{start}/{end}")
+    private ResponseEntity<List<CashCategoryResult>> findAllIncomeByCategory(@PathVariable Optional<Long> userId,@PathVariable String start, @PathVariable String end){
+        if (userId.isPresent()){
+            LocalDate startDate=LocalDate.parse(start);
+            LocalDate endDate=LocalDate.parse(end);
+            return new ResponseEntity<>(cashService.findAllIncomeByCategory(userId.get(),startDate,endDate),HttpStatus.OK);
+        }
+        return new ResponseEntity<>(HttpStatus.BAD_REQUEST);
+    }
+    @GetMapping("/IncomeExpense/{year}")
+    private ResponseEntity<List<Object>> getSumByTypeAndDate(@PathVariable Optional<Long> userId,@PathVariable int year){
+        if (userId.isPresent()){
+            return new ResponseEntity<>(cashService.getDifferenceIncomeExpenseByMonth(userId.get(),year),HttpStatus.OK);
+        }
+        return new ResponseEntity<>(HttpStatus.BAD_REQUEST);
+    }
 }

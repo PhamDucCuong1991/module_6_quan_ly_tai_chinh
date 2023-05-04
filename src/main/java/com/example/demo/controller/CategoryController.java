@@ -1,9 +1,13 @@
 package com.example.demo.controller;
+import com.example.demo.Model.Cash;
 import com.example.demo.Model.Category;
 import com.example.demo.account.Account;
 import com.example.demo.account.service.AccountService;
 import com.example.demo.service.ICrudCategory;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.Pageable;
+import org.springframework.data.web.PageableDefault;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
@@ -20,9 +24,9 @@ public class CategoryController {
     public AccountService accountService;
 
     @GetMapping()
-    public ResponseEntity<List<Category>> findAllCategory(@PathVariable Optional<Long> userId){
+    public ResponseEntity<Page<Category>> findAllCategory(@PageableDefault(value = 10000) Pageable pageable, @PathVariable Optional<Long> userId){
         if (userId.isPresent()){
-            return new ResponseEntity<>(categoryService.findAll(userId.get()), HttpStatus.OK);
+            return new ResponseEntity<>(categoryService.findAll(pageable,userId.get()), HttpStatus.OK);
         }else {
             return new ResponseEntity<>(HttpStatus.BAD_REQUEST);
         }
@@ -48,15 +52,15 @@ public class CategoryController {
         return new ResponseEntity<>(HttpStatus.CREATED);
     }
     @PutMapping("/{id}")
-    private ResponseEntity<Void> update(@PathVariable Long userId,@PathVariable Long id,@RequestBody Category category){
-        Category category1=categoryService.findOne(id);
-        Account account=accountService.findOne(userId);
-        if (category1!=null){
-            category1.setAccount(account);
-            category1.setName(category.getName());
-            category1.setTypeCategory(category.getTypeCategory());
-            categoryService.save(category1);
-            return new ResponseEntity<>(HttpStatus.ACCEPTED);
+    private ResponseEntity<Void> update(@PathVariable Optional<Long> userId,@PathVariable Long id,@RequestBody Category category){
+        if (userId.isPresent()){
+            Category category1=categoryService.findOne(id);
+            Account account=accountService.findAccountById(userId.get());
+            if (category1!=null){
+                category.setAccount(account);
+                categoryService.save(category);
+                return new ResponseEntity<>(HttpStatus.ACCEPTED);
+            }
         }
         return new ResponseEntity<>(HttpStatus.BAD_REQUEST);
     }

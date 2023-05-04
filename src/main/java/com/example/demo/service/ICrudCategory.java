@@ -1,8 +1,11 @@
 package com.example.demo.service;
 import com.example.demo.Model.Category;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.Pageable;
+
 import java.util.List;
 public interface ICrudCategory extends ICrud<Category> {
-    List<Category> findAll(Long userId);
+    Page<Category> findAll(Pageable pageable, Long userId);
     List<Category> findAllByExpences();
     List<Category> findAllByIncome();
     Category findOne(Long id);
@@ -15,6 +18,4 @@ public interface ICrudCategory extends ICrud<Category> {
     List<Category> findCategoryIncomeOnlyUserId(Long id);
     List<Category> findCategoryExpencesDefault();
     List<Category> findCategoryIncomeDefault();
-
-
 }

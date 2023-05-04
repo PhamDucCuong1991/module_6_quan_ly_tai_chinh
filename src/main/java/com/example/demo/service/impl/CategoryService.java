@@ -5,6 +5,8 @@ import com.example.demo.repository.CategoryRepository;
 import com.example.demo.service.ICrudCash;
 import com.example.demo.service.ICrudCategory;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Service;
 import java.util.List;
 @Service
@@ -13,10 +15,18 @@ public class CategoryService implements ICrudCategory {
     public CategoryRepository categoryRepository;
     @Autowired
     public ICrudCash cashService;
+
+    @Override
+    public Page<Category> findAll(Pageable pageable, Long userId) {
+        return categoryRepository.findAllByAccount_Id(pageable,userId);
+    }
+
+
     @Override
     public List<Category> findAll(Long userId) {
-        return categoryRepository.findAllByAccount_Id(userId);
+        return null;
     }
+
     @Override
     public Category findOne(Long id) {
         return categoryRepository.findById(id).orElse(null);

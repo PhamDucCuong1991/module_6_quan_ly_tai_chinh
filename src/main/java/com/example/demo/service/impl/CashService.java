@@ -105,6 +105,20 @@ public class CashService implements ICrudCash {
     public Double sumMoneyExpenceDayNow(Long userId, LocalDate dayNow) {
         return cashRepository.moneyExpence(userId,dayNow);
     }
+@Override
+    public List<Object> getDifferenceIncomeExpenseByMonth(Long userId,int year){
+        return  cashRepository.getDifferenceIncomeExpenseByMonth(userId,year);
+    }
+    @Override
+    public  List<Object> getSumByWalletAndDate(Long userId,LocalDate date){
+        return  cashRepository.getSumByWalletAndDate(userId,date);
+    }
+
+    @Override
+    public List<CashCategoryResult> findAllIncomeByCategory(Long userId, LocalDate startDate, LocalDate endDate) {
+        return cashRepository.findAllIncomeByCategory(userId,startDate,endDate);
+    }
+
 }
 
 
